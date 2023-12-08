@@ -1,0 +1,6 @@
+../Core/Src/mecanum.c:17:6:motor_init	1
+../Core/Src/mecanum.c:25:6:motor_stop	1
+../Core/Src/mecanum.c:36:6:motor_run	5
+../Core/Src/mecanum.c:48:6:mecanum_robot_init	1
+../Core/Src/mecanum.c:55:6:mecanum_robot_stop	1
+../Core/Src/mecanum.c:65:6:mecanum_robot_move	4
