@@ -39,13 +39,13 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY, DEBUGGING, OCTETS
  17 .debug_macro  00004e67  00000000  00000000  00041bfa  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 18 .debug_line   00018f28  00000000  00000000  00046a61  2**0
+ 18 .debug_line   00017d14  00000000  00000000  00046a61  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 19 .debug_str    0009ca59  00000000  00000000  0005f989  2**0
+ 19 .debug_str    0009ca73  00000000  00000000  0005e775  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 20 .debug_frame  000077b4  00000000  00000000  000fc3e4  2**2
+ 20 .debug_frame  000077b4  00000000  00000000  000fb1e8  2**2
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 21 .debug_line_str 00000075  00000000  00000000  00103b98  2**0
+ 21 .debug_line_str 0000008f  00000000  00000000  0010299c  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
 
 Disassembly of section .text:
@@ -775,7 +775,7 @@ Disassembly of section .text:
  8000a2a:	e712      	b.n	8000852 <__aeabi_dmul+0x24a>
 
 08000a2c <__gedf2>:
- 8000a2c:	f04f 3cff 	mov.w	ip, #4294967295
+ 8000a2c:	f04f 3cff 	mov.w	ip, #4294967295	; 0xffffffff
  8000a30:	e006      	b.n	8000a40 <__cmpdf2+0x4>
  8000a32:	bf00      	nop
 
@@ -952,7 +952,7 @@ Disassembly of section .text:
  8000be4:	4770      	bx	lr
  8000be6:	ea50 3001 	orrs.w	r0, r0, r1, lsl #12
  8000bea:	d102      	bne.n	8000bf2 <__aeabi_d2uiz+0x3a>
- 8000bec:	f04f 30ff 	mov.w	r0, #4294967295
+ 8000bec:	f04f 30ff 	mov.w	r0, #4294967295	; 0xffffffff
  8000bf0:	4770      	bx	lr
  8000bf2:	f04f 0000 	mov.w	r0, #0
  8000bf6:	4770      	bx	lr
@@ -1013,8 +1013,8 @@ Disassembly of section .text:
  8000c9e:	bf08      	it	eq
  8000ca0:	2800      	cmpeq	r0, #0
  8000ca2:	bf1c      	itt	ne
- 8000ca4:	f04f 31ff 	movne.w	r1, #4294967295
- 8000ca8:	f04f 30ff 	movne.w	r0, #4294967295
+ 8000ca4:	f04f 31ff 	movne.w	r1, #4294967295	; 0xffffffff
+ 8000ca8:	f04f 30ff 	movne.w	r0, #4294967295	; 0xffffffff
  8000cac:	f000 b9a6 	b.w	8000ffc <__aeabi_idiv0>
  8000cb0:	f1ad 0c08 	sub.w	ip, sp, #8
  8000cb4:	e96d ce04 	strd	ip, lr, [sp, #-16]!
@@ -1097,7 +1097,7 @@ Disassembly of section .text:
  8000d7c:	4290      	cmp	r0, r2
  8000d7e:	d90a      	bls.n	8000d96 <__udivmoddi4+0x62>
  8000d80:	eb1c 0202 	adds.w	r2, ip, r2
- 8000d84:	f101 37ff 	add.w	r7, r1, #4294967295
+ 8000d84:	f101 37ff 	add.w	r7, r1, #4294967295	; 0xffffffff
  8000d88:	f080 811c 	bcs.w	8000fc4 <__udivmoddi4+0x290>
  8000d8c:	4290      	cmp	r0, r2
  8000d8e:	f240 8119 	bls.w	8000fc4 <__udivmoddi4+0x290>
@@ -1112,7 +1112,7 @@ Disassembly of section .text:
  8000daa:	42a5      	cmp	r5, r4
  8000dac:	d90a      	bls.n	8000dc4 <__udivmoddi4+0x90>
  8000dae:	eb1c 0404 	adds.w	r4, ip, r4
- 8000db2:	f100 32ff 	add.w	r2, r0, #4294967295
+ 8000db2:	f100 32ff 	add.w	r2, r0, #4294967295	; 0xffffffff
  8000db6:	f080 8107 	bcs.w	8000fc8 <__udivmoddi4+0x294>
  8000dba:	42a5      	cmp	r5, r4
  8000dbc:	f240 8104 	bls.w	8000fc8 <__udivmoddi4+0x294>
@@ -1166,7 +1166,7 @@ Disassembly of section .text:
  8000e42:	4290      	cmp	r0, r2
  8000e44:	d908      	bls.n	8000e58 <__udivmoddi4+0x124>
  8000e46:	eb1c 0202 	adds.w	r2, ip, r2
- 8000e4a:	f105 38ff 	add.w	r8, r5, #4294967295
+ 8000e4a:	f105 38ff 	add.w	r8, r5, #4294967295	; 0xffffffff
  8000e4e:	d202      	bcs.n	8000e56 <__udivmoddi4+0x122>
  8000e50:	4290      	cmp	r0, r2
  8000e52:	f200 80cb 	bhi.w	8000fec <__udivmoddi4+0x2b8>
@@ -1180,7 +1180,7 @@ Disassembly of section .text:
  8000e6c:	45a6      	cmp	lr, r4
  8000e6e:	d908      	bls.n	8000e82 <__udivmoddi4+0x14e>
  8000e70:	eb1c 0404 	adds.w	r4, ip, r4
- 8000e74:	f100 32ff 	add.w	r2, r0, #4294967295
+ 8000e74:	f100 32ff 	add.w	r2, r0, #4294967295	; 0xffffffff
  8000e78:	d202      	bcs.n	8000e80 <__udivmoddi4+0x14c>
  8000e7a:	45a6      	cmp	lr, r4
  8000e7c:	f200 80bb 	bhi.w	8000ff6 <__udivmoddi4+0x2c2>
@@ -1208,7 +1208,7 @@ Disassembly of section .text:
  8000ec6:	fa00 f001 	lsl.w	r0, r0, r1
  8000eca:	d90b      	bls.n	8000ee4 <__udivmoddi4+0x1b0>
  8000ecc:	eb1c 0404 	adds.w	r4, ip, r4
- 8000ed0:	f108 3aff 	add.w	sl, r8, #4294967295
+ 8000ed0:	f108 3aff 	add.w	sl, r8, #4294967295	; 0xffffffff
  8000ed4:	f080 8088 	bcs.w	8000fe8 <__udivmoddi4+0x2b4>
  8000ed8:	42a5      	cmp	r5, r4
  8000eda:	f240 8085 	bls.w	8000fe8 <__udivmoddi4+0x2b4>
@@ -1223,7 +1223,7 @@ Disassembly of section .text:
  8000ef8:	45a6      	cmp	lr, r4
  8000efa:	d908      	bls.n	8000f0e <__udivmoddi4+0x1da>
  8000efc:	eb1c 0404 	adds.w	r4, ip, r4
- 8000f00:	f103 35ff 	add.w	r5, r3, #4294967295
+ 8000f00:	f103 35ff 	add.w	r5, r3, #4294967295	; 0xffffffff
  8000f04:	d26c      	bcs.n	8000fe0 <__udivmoddi4+0x2ac>
  8000f06:	45a6      	cmp	lr, r4
  8000f08:	d96a      	bls.n	8000fe0 <__udivmoddi4+0x2ac>
@@ -1265,7 +1265,7 @@ Disassembly of section .text:
  8000f74:	fa04 f403 	lsl.w	r4, r4, r3
  8000f78:	d908      	bls.n	8000f8c <__udivmoddi4+0x258>
  8000f7a:	eb1c 0101 	adds.w	r1, ip, r1
- 8000f7e:	f100 38ff 	add.w	r8, r0, #4294967295
+ 8000f7e:	f100 38ff 	add.w	r8, r0, #4294967295	; 0xffffffff
  8000f82:	d22f      	bcs.n	8000fe4 <__udivmoddi4+0x2b0>
  8000f84:	428d      	cmp	r5, r1
  8000f86:	d92d      	bls.n	8000fe4 <__udivmoddi4+0x2b0>
@@ -1280,7 +1280,7 @@ Disassembly of section .text:
  8000fa0:	4291      	cmp	r1, r2
  8000fa2:	d908      	bls.n	8000fb6 <__udivmoddi4+0x282>
  8000fa4:	eb1c 0202 	adds.w	r2, ip, r2
- 8000fa8:	f105 38ff 	add.w	r8, r5, #4294967295
+ 8000fa8:	f105 38ff 	add.w	r8, r5, #4294967295	; 0xffffffff
  8000fac:	d216      	bcs.n	8000fdc <__udivmoddi4+0x2a8>
  8000fae:	4291      	cmp	r1, r2
  8000fb0:	d914      	bls.n	8000fdc <__udivmoddi4+0x2a8>
@@ -2272,7 +2272,7 @@ PUTCHAR_PROTOTYPE {
  800155e:	6078      	str	r0, [r7, #4]
   HAL_UART_Transmit(&huart2, (uint8_t*) &ch, 1, HAL_MAX_DELAY);
  8001560:	1d39      	adds	r1, r7, #4
- 8001562:	f04f 33ff 	mov.w	r3, #4294967295
+ 8001562:	f04f 33ff 	mov.w	r3, #4294967295	; 0xffffffff
  8001566:	2201      	movs	r2, #1
  8001568:	4803      	ldr	r0, [pc, #12]	; (8001578 <__io_putchar+0x20>)
  800156a:	f003 fad4 	bl	8004b16 <HAL_UART_Transmit>
@@ -3961,7 +3961,7 @@ int _kill(int pid, int sig)
  800209c:	2216      	movs	r2, #22
  800209e:	601a      	str	r2, [r3, #0]
   return -1;
- 80020a0:	f04f 33ff 	mov.w	r3, #4294967295
+ 80020a0:	f04f 33ff 	mov.w	r3, #4294967295	; 0xffffffff
 }
  80020a4:	4618      	mov	r0, r3
  80020a6:	3708      	adds	r7, #8
@@ -3977,7 +3977,7 @@ void _exit (int status)
  80020b0:	af00      	add	r7, sp, #0
  80020b2:	6078      	str	r0, [r7, #4]
   _kill(status, -1);
- 80020b4:	f04f 31ff 	mov.w	r1, #4294967295
+ 80020b4:	f04f 31ff 	mov.w	r1, #4294967295	; 0xffffffff
  80020b8:	6878      	ldr	r0, [r7, #4]
  80020ba:	f7ff ffe7 	bl	800208c <_kill>
   while (1) {}    /* Make sure we hang here */
@@ -4080,7 +4080,7 @@ int _close(int file)
  8002138:	6078      	str	r0, [r7, #4]
   (void)file;
   return -1;
- 800213a:	f04f 33ff 	mov.w	r3, #4294967295
+ 800213a:	f04f 33ff 	mov.w	r3, #4294967295	; 0xffffffff
 }
  800213e:	4618      	mov	r0, r3
  8002140:	370c      	adds	r7, #12
@@ -4206,7 +4206,7 @@ void *_sbrk(ptrdiff_t incr)
  80021d2:	220c      	movs	r2, #12
  80021d4:	601a      	str	r2, [r3, #0]
     return (void *)-1;
- 80021d6:	f04f 33ff 	mov.w	r3, #4294967295
+ 80021d6:	f04f 33ff 	mov.w	r3, #4294967295	; 0xffffffff
  80021da:	e009      	b.n	80021f0 <_sbrk+0x54>
   }
 
@@ -4673,7 +4673,7 @@ __STATIC_INLINE uint32_t NVIC_EncodePriority (uint32_t PriorityGroup, uint32_t P
 
   return (
            ((PreemptPriority & (uint32_t)((1UL << (PreemptPriorityBits)) - 1UL)) << SubPriorityBits) |
- 800242c:	f04f 32ff 	mov.w	r2, #4294967295
+ 800242c:	f04f 32ff 	mov.w	r2, #4294967295	; 0xffffffff
  8002430:	69bb      	ldr	r3, [r7, #24]
  8002432:	fa02 f303 	lsl.w	r3, r2, r3
  8002436:	43da      	mvns	r2, r3
@@ -4682,7 +4682,7 @@ __STATIC_INLINE uint32_t NVIC_EncodePriority (uint32_t PriorityGroup, uint32_t P
  800243c:	697b      	ldr	r3, [r7, #20]
  800243e:	409a      	lsls	r2, r3
            ((SubPriority     & (uint32_t)((1UL << (SubPriorityBits    )) - 1UL)))
- 8002440:	f04f 31ff 	mov.w	r1, #4294967295
+ 8002440:	f04f 31ff 	mov.w	r1, #4294967295	; 0xffffffff
  8002444:	697b      	ldr	r3, [r7, #20]
  8002446:	fa01 f303 	lsl.w	r3, r1, r3
  800244a:	43d9      	mvns	r1, r3
@@ -13265,7 +13265,7 @@ static HAL_StatusTypeDef UART_WaitOnFlagUntilTimeout(UART_HandleTypeDef *huart, 
     /* Check for the Timeout */
     if (Timeout != HAL_MAX_DELAY)
  8005472:	6cbb      	ldr	r3, [r7, #72]	; 0x48
- 8005474:	f1b3 3fff 	cmp.w	r3, #4294967295
+ 8005474:	f1b3 3fff 	cmp.w	r3, #4294967295	; 0xffffffff
  8005478:	d04c      	beq.n	8005514 <UART_WaitOnFlagUntilTimeout+0xb4>
     {
       if ((Timeout == 0U) || ((HAL_GetTick() - Tickstart) > Timeout))
@@ -14867,7 +14867,7 @@ osStatus_t osKernelInitialize (void) {
  8005f98:	e002      	b.n	8005fa0 <osKernelInitialize+0x34>
     } else {
       stat = osError;
- 8005f9a:	f04f 33ff 	mov.w	r3, #4294967295
+ 8005f9a:	f04f 33ff 	mov.w	r3, #4294967295	; 0xffffffff
  8005f9e:	607b      	str	r3, [r7, #4]
     }
   }
@@ -14931,7 +14931,7 @@ osStatus_t osKernelStart (void) {
  8005fe8:	e002      	b.n	8005ff0 <osKernelStart+0x3c>
     } else {
       stat = osError;
- 8005fea:	f04f 33ff 	mov.w	r3, #4294967295
+ 8005fea:	f04f 33ff 	mov.w	r3, #4294967295	; 0xffffffff
  8005fee:	607b      	str	r3, [r7, #4]
     }
   }
@@ -14990,7 +14990,7 @@ osThreadId_t osThreadNew (osThreadFunc_t func, void *argument, const osThreadAtt
  800602a:	2300      	movs	r3, #0
  800602c:	627b      	str	r3, [r7, #36]	; 0x24
     mem  = -1;
- 800602e:	f04f 33ff 	mov.w	r3, #4294967295
+ 800602e:	f04f 33ff 	mov.w	r3, #4294967295	; 0xffffffff
  8006032:	61bb      	str	r3, [r7, #24]
 
     if (attr != NULL) {
@@ -15314,7 +15314,7 @@ void vListInitialise( List_t * const pxList )
 	ensure it remains at the end of the list. */
 	pxList->xListEnd.xItemValue = portMAX_DELAY;
  80061d6:	687b      	ldr	r3, [r7, #4]
- 80061d8:	f04f 32ff 	mov.w	r2, #4294967295
+ 80061d8:	f04f 32ff 	mov.w	r2, #4294967295	; 0xffffffff
  80061dc:	609a      	str	r2, [r3, #8]
 
 	/* The list end next and previous pointers point to itself so we know
@@ -15455,7 +15455,7 @@ const TickType_t xValueOfInsertion = pxNewListItem->xItemValue;
 	first, and the algorithm slightly modified if necessary. */
 	if( xValueOfInsertion == portMAX_DELAY )
  8006276:	68bb      	ldr	r3, [r7, #8]
- 8006278:	f1b3 3fff 	cmp.w	r3, #4294967295
+ 8006278:	f1b3 3fff 	cmp.w	r3, #4294967295	; 0xffffffff
  800627c:	d103      	bne.n	8006286 <vListInsert+0x20>
 	{
 		pxIterator = pxList->xListEnd.pxPrevious;
@@ -16225,7 +16225,7 @@ Queue_t * const pxQueue = xQueue;
  800668a:	6b3b      	ldr	r3, [r7, #48]	; 0x30
  800668c:	f893 3044 	ldrb.w	r3, [r3, #68]	; 0x44
  8006690:	b25b      	sxtb	r3, r3
- 8006692:	f1b3 3fff 	cmp.w	r3, #4294967295
+ 8006692:	f1b3 3fff 	cmp.w	r3, #4294967295	; 0xffffffff
  8006696:	d103      	bne.n	80066a0 <xQueueGenericSend+0x16c>
  8006698:	6b3b      	ldr	r3, [r7, #48]	; 0x30
  800669a:	2200      	movs	r2, #0
@@ -16233,7 +16233,7 @@ Queue_t * const pxQueue = xQueue;
  80066a0:	6b3b      	ldr	r3, [r7, #48]	; 0x30
  80066a2:	f893 3045 	ldrb.w	r3, [r3, #69]	; 0x45
  80066a6:	b25b      	sxtb	r3, r3
- 80066a8:	f1b3 3fff 	cmp.w	r3, #4294967295
+ 80066a8:	f1b3 3fff 	cmp.w	r3, #4294967295	; 0xffffffff
  80066ac:	d103      	bne.n	80066b6 <xQueueGenericSend+0x182>
  80066ae:	6b3b      	ldr	r3, [r7, #48]	; 0x30
  80066b0:	2200      	movs	r2, #0
@@ -16470,7 +16470,7 @@ uint32_t ulOriginalBASEPRI, ulNewBASEPRI;
 			be done when the queue is unlocked later. */
 			if( cTxLock == queueUNLOCKED )
  8006806:	f997 3033 	ldrsb.w	r3, [r7, #51]	; 0x33
- 800680a:	f1b3 3fff 	cmp.w	r3, #4294967295
+ 800680a:	f1b3 3fff 	cmp.w	r3, #4294967295	; 0xffffffff
  800680e:	d112      	bne.n	8006836 <xQueueGenericSendFromISR+0x106>
 						}
 					}
@@ -16759,7 +16759,7 @@ Queue_t * const pxQueue = xQueue;
  8006974:	6abb      	ldr	r3, [r7, #40]	; 0x28
  8006976:	f893 3044 	ldrb.w	r3, [r3, #68]	; 0x44
  800697a:	b25b      	sxtb	r3, r3
- 800697c:	f1b3 3fff 	cmp.w	r3, #4294967295
+ 800697c:	f1b3 3fff 	cmp.w	r3, #4294967295	; 0xffffffff
  8006980:	d103      	bne.n	800698a <xQueueReceive+0x122>
  8006982:	6abb      	ldr	r3, [r7, #40]	; 0x28
  8006984:	2200      	movs	r2, #0
@@ -16767,7 +16767,7 @@ Queue_t * const pxQueue = xQueue;
  800698a:	6abb      	ldr	r3, [r7, #40]	; 0x28
  800698c:	f893 3045 	ldrb.w	r3, [r3, #69]	; 0x45
  8006990:	b25b      	sxtb	r3, r3
- 8006992:	f1b3 3fff 	cmp.w	r3, #4294967295
+ 8006992:	f1b3 3fff 	cmp.w	r3, #4294967295	; 0xffffffff
  8006996:	d103      	bne.n	80069a0 <xQueueReceive+0x138>
  8006998:	6abb      	ldr	r3, [r7, #40]	; 0x28
  800699a:	2200      	movs	r2, #0
@@ -17416,7 +17416,7 @@ BaseType_t xReturn;
  8006cb0:	697b      	ldr	r3, [r7, #20]
  8006cb2:	f893 3044 	ldrb.w	r3, [r3, #68]	; 0x44
  8006cb6:	b25b      	sxtb	r3, r3
- 8006cb8:	f1b3 3fff 	cmp.w	r3, #4294967295
+ 8006cb8:	f1b3 3fff 	cmp.w	r3, #4294967295	; 0xffffffff
  8006cbc:	d103      	bne.n	8006cc6 <vQueueWaitForMessageRestricted+0x2a>
  8006cbe:	697b      	ldr	r3, [r7, #20]
  8006cc0:	2200      	movs	r2, #0
@@ -17424,7 +17424,7 @@ BaseType_t xReturn;
  8006cc6:	697b      	ldr	r3, [r7, #20]
  8006cc8:	f893 3045 	ldrb.w	r3, [r3, #69]	; 0x45
  8006ccc:	b25b      	sxtb	r3, r3
- 8006cce:	f1b3 3fff 	cmp.w	r3, #4294967295
+ 8006cce:	f1b3 3fff 	cmp.w	r3, #4294967295	; 0xffffffff
  8006cd2:	d103      	bne.n	8006cdc <vQueueWaitForMessageRestricted+0x40>
  8006cd4:	697b      	ldr	r3, [r7, #20]
  8006cd6:	2200      	movs	r2, #0
@@ -17701,7 +17701,7 @@ BaseType_t xReturn;
 		else
 		{
 			xReturn = errCOULD_NOT_ALLOCATE_REQUIRED_MEMORY;
- 8006e38:	f04f 33ff 	mov.w	r3, #4294967295
+ 8006e38:	f04f 33ff 	mov.w	r3, #4294967295	; 0xffffffff
  8006e3c:	61bb      	str	r3, [r7, #24]
 		}
 
@@ -18338,7 +18338,7 @@ BaseType_t xReturn;
 
 		xNextTaskUnblockTime = portMAX_DELAY;
  800715a:	4b15      	ldr	r3, [pc, #84]	; (80071b0 <vTaskStartScheduler+0xd4>)
- 800715c:	f04f 32ff 	mov.w	r2, #4294967295
+ 800715c:	f04f 32ff 	mov.w	r2, #4294967295	; 0xffffffff
  8007160:	601a      	str	r2, [r3, #0]
 		xSchedulerRunning = pdTRUE;
  8007162:	4b14      	ldr	r3, [pc, #80]	; (80071b4 <vTaskStartScheduler+0xd8>)
@@ -18364,7 +18364,7 @@ BaseType_t xReturn;
  8007172:	e00e      	b.n	8007192 <vTaskStartScheduler+0xb6>
 		configASSERT( xReturn != errCOULD_NOT_ALLOCATE_REQUIRED_MEMORY );
  8007174:	697b      	ldr	r3, [r7, #20]
- 8007176:	f1b3 3fff 	cmp.w	r3, #4294967295
+ 8007176:	f1b3 3fff 	cmp.w	r3, #4294967295	; 0xffffffff
  800717a:	d10a      	bne.n	8007192 <vTaskStartScheduler+0xb6>
 	__asm volatile
  800717c:	f04f 0350 	mov.w	r3, #80	; 0x50
@@ -18792,7 +18792,7 @@ BaseType_t xSwitchRequired = pdFALSE;
 					next time through. */
 					xNextTaskUnblockTime = portMAX_DELAY; /*lint !e961 MISRA exception as the casts are only redundant for some ports. */
  80073b2:	4b37      	ldr	r3, [pc, #220]	; (8007490 <xTaskIncrementTick+0x15c>)
- 80073b4:	f04f 32ff 	mov.w	r2, #4294967295
+ 80073b4:	f04f 32ff 	mov.w	r2, #4294967295	; 0xffffffff
  80073b8:	601a      	str	r2, [r3, #0]
 					break;
  80073ba:	e03f      	b.n	800743c <xTaskIncrementTick+0x108>
@@ -19182,7 +19182,7 @@ void vTaskPlaceOnEventList( List_t * const pxEventList, const TickType_t xTicksT
  80075f2:	d002      	beq.n	80075fa <vTaskPlaceOnEventListRestricted+0x42>
 		{
 			xTicksToWait = portMAX_DELAY;
- 80075f4:	f04f 33ff 	mov.w	r3, #4294967295
+ 80075f4:	f04f 33ff 	mov.w	r3, #4294967295	; 0xffffffff
  80075f8:	60bb      	str	r3, [r7, #8]
 		}
 
@@ -19426,7 +19426,7 @@ BaseType_t xReturn;
 			if( *pxTicksToWait == portMAX_DELAY )
  800775a:	683b      	ldr	r3, [r7, #0]
  800775c:	681b      	ldr	r3, [r3, #0]
- 800775e:	f1b3 3fff 	cmp.w	r3, #4294967295
+ 800775e:	f1b3 3fff 	cmp.w	r3, #4294967295	; 0xffffffff
  8007762:	d102      	bne.n	800776a <xTaskCheckForTimeOut+0x66>
 			{
 				/* If INCLUDE_vTaskSuspend is set to 1 and the block time
@@ -19826,7 +19826,7 @@ TCB_t *pxTCB;
 		there is an item in the delayed list. */
 		xNextTaskUnblockTime = portMAX_DELAY;
  8007964:	4b0a      	ldr	r3, [pc, #40]	; (8007990 <prvResetNextTaskUnblockTime+0x3c>)
- 8007966:	f04f 32ff 	mov.w	r2, #4294967295
+ 8007966:	f04f 32ff 	mov.w	r2, #4294967295	; 0xffffffff
  800796a:	601a      	str	r2, [r3, #0]
 		which the task at the head of the delayed list should be removed
 		from the Blocked state. */
@@ -20103,7 +20103,7 @@ const TickType_t xConstTickCount = xTickCount;
 	{
 		if( ( xTicksToWait == portMAX_DELAY ) && ( xCanBlockIndefinitely != pdFALSE ) )
  8007ac8:	687b      	ldr	r3, [r7, #4]
- 8007aca:	f1b3 3fff 	cmp.w	r3, #4294967295
+ 8007aca:	f1b3 3fff 	cmp.w	r3, #4294967295	; 0xffffffff
  8007ace:	d10a      	bne.n	8007ae6 <prvAddCurrentTaskToDelayedList+0x3a>
  8007ad0:	683b      	ldr	r3, [r7, #0]
  8007ad2:	2b00      	cmp	r3, #0
@@ -21484,7 +21484,7 @@ volatile uint32_t ulDummy = 0;
 	configASSERT( uxCriticalNesting == ~0UL );
  8008262:	4b12      	ldr	r3, [pc, #72]	; (80082ac <prvTaskExitError+0x54>)
  8008264:	681b      	ldr	r3, [r3, #0]
- 8008266:	f1b3 3fff 	cmp.w	r3, #4294967295
+ 8008266:	f1b3 3fff 	cmp.w	r3, #4294967295	; 0xffffffff
  800826a:	d00a      	beq.n	8008282 <prvTaskExitError+0x2a>
 	__asm volatile
  800826c:	f04f 0350 	mov.w	r3, #80	; 0x50
@@ -23807,7 +23807,7 @@ lwrb_find(const lwrb_t* buff, const void* bts, size_t len, size_t start_offset, 
  8009008:	f80c 4c01 	strb.w	r4, [ip, #-1]
  800900c:	460c      	mov	r4, r1
  800900e:	2c63      	cmp	r4, #99	; 0x63
- 8009010:	f102 32ff 	add.w	r2, r2, #4294967295
+ 8009010:	f102 32ff 	add.w	r2, r2, #4294967295	; 0xffffffff
  8009014:	4629      	mov	r1, r5
  8009016:	dcf1      	bgt.n	8008ffc <__exponent+0x22>
  8009018:	3130      	adds	r1, #48	; 0x30
@@ -23868,12 +23868,12 @@ lwrb_find(const lwrb_t* buff, const void* bts, size_t len, size_t start_offset, 
  80090ac:	e9c4 8912 	strd	r8, r9, [r4, #72]	; 0x48
  80090b0:	e9dd 0106 	ldrd	r0, r1, [sp, #24]
  80090b4:	4b9e      	ldr	r3, [pc, #632]	; (8009330 <_printf_float+0x2d8>)
- 80090b6:	f04f 32ff 	mov.w	r2, #4294967295
+ 80090b6:	f04f 32ff 	mov.w	r2, #4294967295	; 0xffffffff
  80090ba:	f7f7 fd3f 	bl	8000b3c <__aeabi_dcmpun>
  80090be:	bb88      	cbnz	r0, 8009124 <_printf_float+0xcc>
  80090c0:	e9dd 0106 	ldrd	r0, r1, [sp, #24]
  80090c4:	4b9a      	ldr	r3, [pc, #616]	; (8009330 <_printf_float+0x2d8>)
- 80090c6:	f04f 32ff 	mov.w	r2, #4294967295
+ 80090c6:	f04f 32ff 	mov.w	r2, #4294967295	; 0xffffffff
  80090ca:	f7f7 fd19 	bl	8000b00 <__aeabi_dcmple>
  80090ce:	bb48      	cbnz	r0, 8009124 <_printf_float+0xcc>
  80090d0:	2200      	movs	r2, #0
@@ -23904,7 +23904,7 @@ lwrb_find(const lwrb_t* buff, const void* bts, size_t len, size_t start_offset, 
  800910c:	f000 f9da 	bl	80094c4 <_printf_common>
  8009110:	3001      	adds	r0, #1
  8009112:	f040 8090 	bne.w	8009236 <_printf_float+0x1de>
- 8009116:	f04f 30ff 	mov.w	r0, #4294967295
+ 8009116:	f04f 30ff 	mov.w	r0, #4294967295	; 0xffffffff
  800911a:	b00d      	add	sp, #52	; 0x34
  800911c:	ecbd 8b02 	vpop	{d8}
  8009120:	e8bd 8ff0 	ldmia.w	sp!, {r4, r5, r6, r7, r8, r9, sl, fp, pc}
@@ -24244,7 +24244,7 @@ lwrb_find(const lwrb_t* buff, const void* bts, size_t len, size_t start_offset, 
  8009448:	f8dd a028 	ldr.w	sl, [sp, #40]	; 0x28
  800944c:	f7f7 fb44 	bl	8000ad8 <__aeabi_dcmpeq>
  8009450:	b9d8      	cbnz	r0, 800948a <_printf_float+0x432>
- 8009452:	f10a 33ff 	add.w	r3, sl, #4294967295
+ 8009452:	f10a 33ff 	add.w	r3, sl, #4294967295	; 0xffffffff
  8009456:	f108 0201 	add.w	r2, r8, #1
  800945a:	4631      	mov	r1, r6
  800945c:	4628      	mov	r0, r5
@@ -24365,7 +24365,7 @@ lwrb_find(const lwrb_t* buff, const void* bts, size_t len, size_t start_offset, 
  8009562:	47c0      	blx	r8
  8009564:	3001      	adds	r0, #1
  8009566:	d103      	bne.n	8009570 <_printf_common+0xac>
- 8009568:	f04f 30ff 	mov.w	r0, #4294967295
+ 8009568:	f04f 30ff 	mov.w	r0, #4294967295	; 0xffffffff
  800956c:	e8bd 87f0 	ldmia.w	sp!, {r4, r5, r6, r7, r8, r9, sl, pc}
  8009570:	3501      	adds	r5, #1
  8009572:	e7c6      	b.n	8009502 <_printf_common+0x3e>
@@ -24511,7 +24511,7 @@ lwrb_find(const lwrb_t* buff, const void* bts, size_t len, size_t start_offset, 
  80096dc:	bfde      	ittt	le
  80096de:	2330      	movle	r3, #48	; 0x30
  80096e0:	f805 3c01 	strble.w	r3, [r5, #-1]
- 80096e4:	f105 35ff 	addle.w	r5, r5, #4294967295
+ 80096e4:	f105 35ff 	addle.w	r5, r5, #4294967295	; 0xffffffff
  80096e8:	1b52      	subs	r2, r2, r5
  80096ea:	6122      	str	r2, [r4, #16]
  80096ec:	f8cd a000 	str.w	sl, [sp]
@@ -24522,7 +24522,7 @@ lwrb_find(const lwrb_t* buff, const void* bts, size_t len, size_t start_offset, 
  80096f8:	f7ff fee4 	bl	80094c4 <_printf_common>
  80096fc:	3001      	adds	r0, #1
  80096fe:	d14a      	bne.n	8009796 <_printf_i+0x1f6>
- 8009700:	f04f 30ff 	mov.w	r0, #4294967295
+ 8009700:	f04f 30ff 	mov.w	r0, #4294967295	; 0xffffffff
  8009704:	b004      	add	sp, #16
  8009706:	e8bd 87f0 	ldmia.w	sp!, {r4, r5, r6, r7, r8, r9, sl, pc}
  800970a:	6823      	ldr	r3, [r4, #0]
@@ -24671,7 +24671,7 @@ lwrb_find(const lwrb_t* buff, const void* bts, size_t len, size_t start_offset, 
  800984a:	6823      	ldr	r3, [r4, #0]
  800984c:	f423 7380 	bic.w	r3, r3, #256	; 0x100
  8009850:	6023      	str	r3, [r4, #0]
- 8009852:	f10a 3aff 	add.w	sl, sl, #4294967295
+ 8009852:	f10a 3aff 	add.w	sl, sl, #4294967295	; 0xffffffff
  8009856:	f1ba 0f01 	cmp.w	sl, #1
  800985a:	f200 8113 	bhi.w	8009a84 <_scanf_float+0x2a0>
  800985e:	455e      	cmp	r6, fp
@@ -24894,7 +24894,7 @@ lwrb_find(const lwrb_t* buff, const void* bts, size_t len, size_t start_offset, 
  8009abc:	6923      	ldr	r3, [r4, #16]
  8009abe:	3b01      	subs	r3, #1
  8009ac0:	6123      	str	r3, [r4, #16]
- 8009ac2:	f10a 3aff 	add.w	sl, sl, #4294967295
+ 8009ac2:	f10a 3aff 	add.w	sl, sl, #4294967295	; 0xffffffff
  8009ac6:	fa5f fa8a 	uxtb.w	sl, sl
  8009aca:	f1ba 0f02 	cmp.w	sl, #2
  8009ace:	d1ec      	bne.n	8009aaa <_scanf_float+0x2c6>
@@ -24923,8 +24923,8 @@ lwrb_find(const lwrb_t* buff, const void* bts, size_t len, size_t start_offset, 
  8009b02:	f816 1c01 	ldrb.w	r1, [r6, #-1]
  8009b06:	6923      	ldr	r3, [r4, #16]
  8009b08:	2965      	cmp	r1, #101	; 0x65
- 8009b0a:	f103 33ff 	add.w	r3, r3, #4294967295
- 8009b0e:	f106 35ff 	add.w	r5, r6, #4294967295
+ 8009b0a:	f103 33ff 	add.w	r3, r3, #4294967295	; 0xffffffff
+ 8009b0e:	f106 35ff 	add.w	r5, r6, #4294967295	; 0xffffffff
  8009b12:	6123      	str	r3, [r4, #16]
  8009b14:	d00c      	beq.n	8009b30 <_scanf_float+0x34c>
  8009b16:	2945      	cmp	r1, #69	; 0x45
@@ -25536,7 +25536,7 @@ lwrb_find(const lwrb_t* buff, const void* bts, size_t len, size_t start_offset, 
 0800a07a <memcpy>:
  800a07a:	440a      	add	r2, r1
  800a07c:	4291      	cmp	r1, r2
- 800a07e:	f100 33ff 	add.w	r3, r0, #4294967295
+ 800a07e:	f100 33ff 	add.w	r3, r0, #4294967295	; 0xffffffff
  800a082:	d100      	bne.n	800a086 <memcpy+0xc>
  800a084:	4770      	bx	lr
  800a086:	b510      	push	{r4, lr}
@@ -25806,7 +25806,7 @@ lwrb_find(const lwrb_t* buff, const void* bts, size_t len, size_t start_offset, 
  800a33c:	463b      	mov	r3, r7
  800a33e:	f7f6 fbcb 	bl	8000ad8 <__aeabi_dcmpeq>
  800a342:	b908      	cbnz	r0, 800a348 <_dtoa_r+0x190>
- 800a344:	f10b 3bff 	add.w	fp, fp, #4294967295
+ 800a344:	f10b 3bff 	add.w	fp, fp, #4294967295	; 0xffffffff
  800a348:	f1bb 0f16 	cmp.w	fp, #22
  800a34c:	d857      	bhi.n	800a3fe <_dtoa_r+0x246>
  800a34e:	4b5b      	ldr	r3, [pc, #364]	; (800a4bc <_dtoa_r+0x304>)
@@ -25816,7 +25816,7 @@ lwrb_find(const lwrb_t* buff, const void* bts, size_t len, size_t start_offset, 
  800a35c:	f7f6 fbc6 	bl	8000aec <__aeabi_dcmplt>
  800a360:	2800      	cmp	r0, #0
  800a362:	d04e      	beq.n	800a402 <_dtoa_r+0x24a>
- 800a364:	f10b 3bff 	add.w	fp, fp, #4294967295
+ 800a364:	f10b 3bff 	add.w	fp, fp, #4294967295	; 0xffffffff
  800a368:	2300      	movs	r3, #0
  800a36a:	930c      	str	r3, [sp, #48]	; 0x30
  800a36c:	9b10      	ldr	r3, [sp, #64]	; 0x40
@@ -25932,7 +25932,7 @@ lwrb_find(const lwrb_t* buff, const void* bts, size_t len, size_t start_offset, 
  800a474:	2300      	movs	r3, #0
  800a476:	9307      	str	r3, [sp, #28]
  800a478:	9509      	str	r5, [sp, #36]	; 0x24
- 800a47a:	f04f 33ff 	mov.w	r3, #4294967295
+ 800a47a:	f04f 33ff 	mov.w	r3, #4294967295	; 0xffffffff
  800a47e:	9301      	str	r3, [sp, #4]
  800a480:	9304      	str	r3, [sp, #16]
  800a482:	2200      	movs	r2, #0
@@ -26051,7 +26051,7 @@ lwrb_find(const lwrb_t* buff, const void* bts, size_t len, size_t start_offset, 
  800a5c6:	f7f6 f81f 	bl	8000608 <__aeabi_dmul>
  800a5ca:	e9cd 0102 	strd	r0, r1, [sp, #8]
  800a5ce:	9e01      	ldr	r6, [sp, #4]
- 800a5d0:	f10b 37ff 	add.w	r7, fp, #4294967295
+ 800a5d0:	f10b 37ff 	add.w	r7, fp, #4294967295	; 0xffffffff
  800a5d4:	3501      	adds	r5, #1
  800a5d6:	e9dd 8902 	ldrd	r8, r9, [sp, #8]
  800a5da:	4628      	mov	r0, r5
@@ -26474,7 +26474,7 @@ lwrb_find(const lwrb_t* buff, const void* bts, size_t len, size_t start_offset, 
  800aa0a:	4620      	mov	r0, r4
  800aa0c:	f000 fb28 	bl	800b060 <__multadd>
  800aa10:	9b09      	ldr	r3, [sp, #36]	; 0x24
- 800aa12:	f10b 3bff 	add.w	fp, fp, #4294967295
+ 800aa12:	f10b 3bff 	add.w	fp, fp, #4294967295	; 0xffffffff
  800aa16:	4682      	mov	sl, r0
  800aa18:	2b00      	cmp	r3, #0
  800aa1a:	f000 81b0 	beq.w	800ad7e <_dtoa_r+0xbc6>
@@ -26956,7 +26956,7 @@ lwrb_find(const lwrb_t* buff, const void* bts, size_t len, size_t start_offset, 
  800ae70:	f002 fb76 	bl	800d560 <_sbrk_r>
  800ae74:	3001      	adds	r0, #1
  800ae76:	d101      	bne.n	800ae7c <sbrk_aligned+0x38>
- 800ae78:	f04f 34ff 	mov.w	r4, #4294967295
+ 800ae78:	f04f 34ff 	mov.w	r4, #4294967295	; 0xffffffff
  800ae7c:	4620      	mov	r0, r4
  800ae7e:	bd70      	pop	{r4, r5, r6, pc}
  800ae80:	20005930 	.word	0x20005930
@@ -27669,7 +27669,7 @@ lwrb_find(const lwrb_t* buff, const void* bts, size_t len, size_t start_offset, 
  800b554:	4283      	cmp	r3, r0
  800b556:	d3f3      	bcc.n	800b540 <__mcmp+0x18>
  800b558:	e7fa      	b.n	800b550 <__mcmp+0x28>
- 800b55a:	f04f 32ff 	mov.w	r2, #4294967295
+ 800b55a:	f04f 32ff 	mov.w	r2, #4294967295	; 0xffffffff
  800b55e:	e7f7      	b.n	800b550 <__mcmp+0x28>
 
 0800b560 <__mdiff>:
@@ -28167,7 +28167,7 @@ lwrb_find(const lwrb_t* buff, const void* bts, size_t len, size_t start_offset, 
  800ba4e:	f8df 9178 	ldr.w	r9, [pc, #376]	; 800bbc8 <_strtod_l+0x298>
  800ba52:	e7e4      	b.n	800ba1e <_strtod_l+0xee>
  800ba54:	f06f 4900 	mvn.w	r9, #2147483648	; 0x80000000
- 800ba58:	f04f 38ff 	mov.w	r8, #4294967295
+ 800ba58:	f04f 38ff 	mov.w	r8, #4294967295	; 0xffffffff
  800ba5c:	e7df      	b.n	800ba1e <_strtod_l+0xee>
  800ba5e:	9b15      	ldr	r3, [sp, #84]	; 0x54
  800ba60:	1c5a      	adds	r2, r3, #1
@@ -28573,7 +28573,7 @@ lwrb_find(const lwrb_t* buff, const void* bts, size_t len, size_t start_offset, 
  800be36:	428b      	cmp	r3, r1
  800be38:	bf86      	itte	hi
  800be3a:	f8df 9090 	ldrhi.w	r9, [pc, #144]	; 800becc <_strtod_l+0x59c>
- 800be3e:	f04f 38ff 	movhi.w	r8, #4294967295
+ 800be3e:	f04f 38ff 	movhi.w	r8, #4294967295	; 0xffffffff
  800be42:	f102 7954 	addls.w	r9, r2, #55574528	; 0x3500000
  800be46:	2300      	movs	r3, #0
  800be48:	9304      	str	r3, [sp, #16]
@@ -28655,7 +28655,7 @@ lwrb_find(const lwrb_t* buff, const void* bts, size_t len, size_t start_offset, 
  800bf14:	f340 811e 	ble.w	800c154 <_strtod_l+0x824>
  800bf18:	2b34      	cmp	r3, #52	; 0x34
  800bf1a:	bfde      	ittt	le
- 800bf1c:	f04f 33ff 	movle.w	r3, #4294967295
+ 800bf1c:	f04f 33ff 	movle.w	r3, #4294967295	; 0xffffffff
  800bf20:	f1c2 024b 	rsble	r2, r2, #75	; 0x4b
  800bf24:	4093      	lslle	r3, r2
  800bf26:	f04f 0800 	mov.w	r8, #0
@@ -28879,7 +28879,7 @@ lwrb_find(const lwrb_t* buff, const void* bts, size_t len, size_t start_offset, 
  800c14e:	2322      	movs	r3, #34	; 0x22
  800c150:	6023      	str	r3, [r4, #0]
  800c152:	e63b      	b.n	800bdcc <_strtod_l+0x49c>
- 800c154:	f04f 32ff 	mov.w	r2, #4294967295
+ 800c154:	f04f 32ff 	mov.w	r2, #4294967295	; 0xffffffff
  800c158:	fa02 f303 	lsl.w	r3, r2, r3
  800c15c:	ea03 0808 	and.w	r8, r3, r8
  800c160:	e6e8      	b.n	800bf34 <_strtod_l+0x604>
@@ -28916,7 +28916,7 @@ lwrb_find(const lwrb_t* buff, const void* bts, size_t len, size_t start_offset, 
  800c1b0:	4b2e      	ldr	r3, [pc, #184]	; (800c26c <_strtod_l+0x93c>)
  800c1b2:	ea09 0303 	and.w	r3, r9, r3
  800c1b6:	f1b3 6fd4 	cmp.w	r3, #111149056	; 0x6a00000
- 800c1ba:	f04f 32ff 	mov.w	r2, #4294967295
+ 800c1ba:	f04f 32ff 	mov.w	r2, #4294967295	; 0xffffffff
  800c1be:	d81a      	bhi.n	800c1f6 <_strtod_l+0x8c6>
  800c1c0:	0d1b      	lsrs	r3, r3, #20
  800c1c2:	f1c3 036b 	rsb	r3, r3, #107	; 0x6b
@@ -28936,7 +28936,7 @@ lwrb_find(const lwrb_t* buff, const void* bts, size_t len, size_t start_offset, 
  800c1ea:	2b00      	cmp	r3, #0
  800c1ec:	d1a2      	bne.n	800c134 <_strtod_l+0x804>
  800c1ee:	e5ed      	b.n	800bdcc <_strtod_l+0x49c>
- 800c1f0:	f04f 33ff 	mov.w	r3, #4294967295
+ 800c1f0:	f04f 33ff 	mov.w	r3, #4294967295	; 0xffffffff
  800c1f4:	e7e9      	b.n	800c1ca <_strtod_l+0x89a>
  800c1f6:	4613      	mov	r3, r2
  800c1f8:	e7e7      	b.n	800c1ca <_strtod_l+0x89a>
@@ -28963,7 +28963,7 @@ lwrb_find(const lwrb_t* buff, const void* bts, size_t len, size_t start_offset, 
  800c22c:	f5a3 1380 	sub.w	r3, r3, #1048576	; 0x100000
  800c230:	ea6f 5913 	mvn.w	r9, r3, lsr #20
  800c234:	ea6f 5909 	mvn.w	r9, r9, lsl #20
- 800c238:	f04f 38ff 	mov.w	r8, #4294967295
+ 800c238:	f04f 38ff 	mov.w	r8, #4294967295	; 0xffffffff
  800c23c:	e7d4      	b.n	800c1e8 <_strtod_l+0x8b8>
  800c23e:	9b0e      	ldr	r3, [sp, #56]	; 0x38
  800c240:	ea13 0f08 	tst.w	r3, r8
@@ -29056,7 +29056,7 @@ lwrb_find(const lwrb_t* buff, const void* bts, size_t len, size_t start_offset, 
  800c332:	3301      	adds	r3, #1
  800c334:	f43f ad40 	beq.w	800bdb8 <_strtod_l+0x488>
  800c338:	f8df 91d0 	ldr.w	r9, [pc, #464]	; 800c50c <_strtod_l+0xbdc>
- 800c33c:	f04f 38ff 	mov.w	r8, #4294967295
+ 800c33c:	f04f 38ff 	mov.w	r8, #4294967295	; 0xffffffff
  800c340:	9916      	ldr	r1, [sp, #88]	; 0x58
  800c342:	4620      	mov	r0, r4
  800c344:	f7fe fe6a 	bl	800b01c <_Bfree>
@@ -29263,7 +29263,7 @@ lwrb_find(const lwrb_t* buff, const void* bts, size_t len, size_t start_offset, 
  800c56e:	2310      	movs	r3, #16
  800c570:	3502      	adds	r5, #2
  800c572:	f107 4800 	add.w	r8, r7, #2147483648	; 0x80000000
- 800c576:	f108 38ff 	add.w	r8, r8, #4294967295
+ 800c576:	f108 38ff 	add.w	r8, r8, #4294967295	; 0xffffffff
  800c57a:	f04f 0e00 	mov.w	lr, #0
  800c57e:	fbb8 f9f3 	udiv	r9, r8, r3
  800c582:	4676      	mov	r6, lr
@@ -29274,7 +29274,7 @@ lwrb_find(const lwrb_t* buff, const void* bts, size_t len, size_t start_offset, 
  800c592:	4664      	mov	r4, ip
  800c594:	42a3      	cmp	r3, r4
  800c596:	dd24      	ble.n	800c5e2 <_strtol_l.constprop.0+0xc6>
- 800c598:	f1be 3fff 	cmp.w	lr, #4294967295
+ 800c598:	f1be 3fff 	cmp.w	lr, #4294967295	; 0xffffffff
  800c59c:	d008      	beq.n	800c5b0 <_strtol_l.constprop.0+0x94>
  800c59e:	45b1      	cmp	r9, r6
  800c5a0:	d31c      	bcc.n	800c5dc <_strtol_l.constprop.0+0xc0>
@@ -29300,9 +29300,9 @@ lwrb_find(const lwrb_t* buff, const void* bts, size_t len, size_t start_offset, 
  800c5d6:	d804      	bhi.n	800c5e2 <_strtol_l.constprop.0+0xc6>
  800c5d8:	3c57      	subs	r4, #87	; 0x57
  800c5da:	e7db      	b.n	800c594 <_strtol_l.constprop.0+0x78>
- 800c5dc:	f04f 3eff 	mov.w	lr, #4294967295
+ 800c5dc:	f04f 3eff 	mov.w	lr, #4294967295	; 0xffffffff
  800c5e0:	e7e6      	b.n	800c5b0 <_strtol_l.constprop.0+0x94>
- 800c5e2:	f1be 3fff 	cmp.w	lr, #4294967295
+ 800c5e2:	f1be 3fff 	cmp.w	lr, #4294967295	; 0xffffffff
  800c5e6:	d105      	bne.n	800c5f4 <_strtol_l.constprop.0+0xd8>
  800c5e8:	2322      	movs	r3, #34	; 0x22
  800c5ea:	6003      	str	r3, [r0, #0]
@@ -29406,7 +29406,7 @@ lwrb_find(const lwrb_t* buff, const void* bts, size_t len, size_t start_offset, 
  800c6ca:	89a3      	ldrh	r3, [r4, #12]
  800c6cc:	f043 0340 	orr.w	r3, r3, #64	; 0x40
  800c6d0:	81a3      	strh	r3, [r4, #12]
- 800c6d2:	f04f 30ff 	mov.w	r0, #4294967295
+ 800c6d2:	f04f 30ff 	mov.w	r0, #4294967295	; 0xffffffff
  800c6d6:	e7e9      	b.n	800c6ac <__ssputs_r+0x88>
 
 0800c6d8 <_svfiprintf_r>:
@@ -29428,7 +29428,7 @@ lwrb_find(const lwrb_t* buff, const void* bts, size_t len, size_t start_offset, 
  800c6fa:	b920      	cbnz	r0, 800c706 <_svfiprintf_r+0x2e>
  800c6fc:	230c      	movs	r3, #12
  800c6fe:	603b      	str	r3, [r7, #0]
- 800c700:	f04f 30ff 	mov.w	r0, #4294967295
+ 800c700:	f04f 30ff 	mov.w	r0, #4294967295	; 0xffffffff
  800c704:	e0d0      	b.n	800c8a8 <_svfiprintf_r+0x1d0>
  800c706:	2340      	movs	r3, #64	; 0x40
  800c708:	616b      	str	r3, [r5, #20]
@@ -29463,7 +29463,7 @@ lwrb_find(const lwrb_t* buff, const void* bts, size_t len, size_t start_offset, 
  800c756:	2b00      	cmp	r3, #0
  800c758:	f000 80a1 	beq.w	800c89e <_svfiprintf_r+0x1c6>
  800c75c:	2300      	movs	r3, #0
- 800c75e:	f04f 32ff 	mov.w	r2, #4294967295
+ 800c75e:	f04f 32ff 	mov.w	r2, #4294967295	; 0xffffffff
  800c762:	e9cd 2305 	strd	r2, r3, [sp, #20]
  800c766:	f10a 0a01 	add.w	sl, sl, #1
  800c76a:	9304      	str	r3, [sp, #16]
@@ -29530,7 +29530,7 @@ lwrb_find(const lwrb_t* buff, const void* bts, size_t len, size_t start_offset, 
  800c7fa:	9203      	str	r2, [sp, #12]
  800c7fc:	2b00      	cmp	r3, #0
  800c7fe:	bfb8      	it	lt
- 800c800:	f04f 33ff 	movlt.w	r3, #4294967295
+ 800c800:	f04f 33ff 	movlt.w	r3, #4294967295	; 0xffffffff
  800c804:	3402      	adds	r4, #2
  800c806:	9305      	str	r3, [sp, #20]
  800c808:	f8df a0c4 	ldr.w	sl, [pc, #196]	; 800c8d0 <_svfiprintf_r+0x1f8>
@@ -29621,7 +29621,7 @@ lwrb_find(const lwrb_t* buff, const void* bts, size_t len, size_t start_offset, 
  800c8d6:	1c4b      	adds	r3, r1, #1
  800c8d8:	4614      	mov	r4, r2
  800c8da:	d103      	bne.n	800c8e4 <_sungetc_r+0x10>
- 800c8dc:	f04f 35ff 	mov.w	r5, #4294967295
+ 800c8dc:	f04f 35ff 	mov.w	r5, #4294967295	; 0xffffffff
  800c8e0:	4628      	mov	r0, r5
  800c8e2:	bd38      	pop	{r3, r4, r5, pc}
  800c8e4:	8993      	ldrh	r3, [r2, #12]
@@ -29695,7 +29695,7 @@ lwrb_find(const lwrb_t* buff, const void* bts, size_t len, size_t start_offset, 
  800c97a:	89a3      	ldrh	r3, [r4, #12]
  800c97c:	f043 0320 	orr.w	r3, r3, #32
  800c980:	81a3      	strh	r3, [r4, #12]
- 800c982:	f04f 30ff 	mov.w	r0, #4294967295
+ 800c982:	f04f 30ff 	mov.w	r0, #4294967295	; 0xffffffff
  800c986:	e7f3      	b.n	800c970 <__ssrefill_r+0x22>
 
 0800c988 <__ssvfiscanf_r>:
@@ -29865,7 +29865,7 @@ lwrb_find(const lwrb_t* buff, const void* bts, size_t len, size_t start_offset, 
  800cb38:	9844      	ldr	r0, [sp, #272]	; 0x110
  800cb3a:	2800      	cmp	r0, #0
  800cb3c:	f040 808d 	bne.w	800cc5a <__ssvfiscanf_r+0x2d2>
- 800cb40:	f04f 30ff 	mov.w	r0, #4294967295
+ 800cb40:	f04f 30ff 	mov.w	r0, #4294967295	; 0xffffffff
  800cb44:	e08f      	b.n	800cc66 <__ssvfiscanf_r+0x2de>
  800cb46:	9a41      	ldr	r2, [sp, #260]	; 0x104
  800cb48:	f042 0220 	orr.w	r2, r2, #32
@@ -29993,7 +29993,7 @@ lwrb_find(const lwrb_t* buff, const void* bts, size_t len, size_t start_offset, 
  800cc5a:	89a3      	ldrh	r3, [r4, #12]
  800cc5c:	f013 0f40 	tst.w	r3, #64	; 0x40
  800cc60:	bf18      	it	ne
- 800cc62:	f04f 30ff 	movne.w	r0, #4294967295
+ 800cc62:	f04f 30ff 	movne.w	r0, #4294967295	; 0xffffffff
  800cc66:	f50d 7d22 	add.w	sp, sp, #648	; 0x288
  800cc6a:	e8bd 87f0 	ldmia.w	sp!, {r4, r5, r6, r7, r8, r9, sl, pc}
  800cc6e:	9844      	ldr	r0, [sp, #272]	; 0x110
@@ -30073,7 +30073,7 @@ lwrb_find(const lwrb_t* buff, const void* bts, size_t len, size_t start_offset, 
  800cd0a:	6e6b      	ldr	r3, [r5, #100]	; 0x64
  800cd0c:	07dc      	lsls	r4, r3, #31
  800cd0e:	d504      	bpl.n	800cd1a <_vfiprintf_r+0x4e>
- 800cd10:	f04f 30ff 	mov.w	r0, #4294967295
+ 800cd10:	f04f 30ff 	mov.w	r0, #4294967295	; 0xffffffff
  800cd14:	b01d      	add	sp, #116	; 0x74
  800cd16:	e8bd 8ff0 	ldmia.w	sp!, {r4, r5, r6, r7, r8, r9, sl, fp, pc}
  800cd1a:	89ab      	ldrh	r3, [r5, #12]
@@ -30113,7 +30113,7 @@ lwrb_find(const lwrb_t* buff, const void* bts, size_t len, size_t start_offset, 
  800cd74:	2b00      	cmp	r3, #0
  800cd76:	f000 80a1 	beq.w	800cebc <_vfiprintf_r+0x1f0>
  800cd7a:	2300      	movs	r3, #0
- 800cd7c:	f04f 32ff 	mov.w	r2, #4294967295
+ 800cd7c:	f04f 32ff 	mov.w	r2, #4294967295	; 0xffffffff
  800cd80:	e9cd 2305 	strd	r2, r3, [sp, #20]
  800cd84:	f10a 0a01 	add.w	sl, sl, #1
  800cd88:	9304      	str	r3, [sp, #16]
@@ -30180,7 +30180,7 @@ lwrb_find(const lwrb_t* buff, const void* bts, size_t len, size_t start_offset, 
  800ce18:	9203      	str	r2, [sp, #12]
  800ce1a:	2b00      	cmp	r3, #0
  800ce1c:	bfb8      	it	lt
- 800ce1e:	f04f 33ff 	movlt.w	r3, #4294967295
+ 800ce1e:	f04f 33ff 	movlt.w	r3, #4294967295	; 0xffffffff
  800ce22:	3402      	adds	r4, #2
  800ce24:	9305      	str	r3, [sp, #20]
  800ce26:	f8df a0d4 	ldr.w	sl, [pc, #212]	; 800cefc <_vfiprintf_r+0x230>
@@ -30284,7 +30284,7 @@ lwrb_find(const lwrb_t* buff, const void* bts, size_t len, size_t start_offset, 
  800cf10:	2a00      	cmp	r2, #0
  800cf12:	bf0c      	ite	eq
  800cf14:	2201      	moveq	r2, #1
- 800cf16:	f04f 32ff 	movne.w	r2, #4294967295
+ 800cf16:	f04f 32ff 	movne.w	r2, #4294967295	; 0xffffffff
  800cf1a:	608a      	str	r2, [r1, #8]
  800cf1c:	6822      	ldr	r2, [r4, #0]
  800cf1e:	f8df 9090 	ldr.w	r9, [pc, #144]	; 800cfb0 <_scanf_chars+0xb0>
@@ -30461,7 +30461,7 @@ lwrb_find(const lwrb_t* buff, const void* bts, size_t len, size_t start_offset, 
  800d0b4:	f1b9 0f00 	cmp.w	r9, #0
  800d0b8:	d003      	beq.n	800d0c2 <_scanf_i+0x10e>
  800d0ba:	3301      	adds	r3, #1
- 800d0bc:	f109 39ff 	add.w	r9, r9, #4294967295
+ 800d0bc:	f109 39ff 	add.w	r9, r9, #4294967295	; 0xffffffff
  800d0c0:	60a3      	str	r3, [r4, #8]
  800d0c2:	6873      	ldr	r3, [r6, #4]
  800d0c4:	3b01      	subs	r3, #1
@@ -30506,7 +30506,7 @@ lwrb_find(const lwrb_t* buff, const void* bts, size_t len, size_t start_offset, 
  800d124:	4632      	mov	r2, r6
  800d126:	4650      	mov	r0, sl
  800d128:	4798      	blx	r3
- 800d12a:	f105 39ff 	add.w	r9, r5, #4294967295
+ 800d12a:	f105 39ff 	add.w	r9, r5, #4294967295	; 0xffffffff
  800d12e:	464d      	mov	r5, r9
  800d130:	42bd      	cmp	r5, r7
  800d132:	d028      	beq.n	800d186 <_scanf_i+0x1d2>
@@ -30669,7 +30669,7 @@ lwrb_find(const lwrb_t* buff, const void* bts, size_t len, size_t start_offset, 
  800d28c:	89a3      	ldrh	r3, [r4, #12]
  800d28e:	f043 0340 	orr.w	r3, r3, #64	; 0x40
  800d292:	81a3      	strh	r3, [r4, #12]
- 800d294:	f04f 30ff 	mov.w	r0, #4294967295
+ 800d294:	f04f 30ff 	mov.w	r0, #4294967295	; 0xffffffff
  800d298:	e78e      	b.n	800d1b8 <__sflush_r+0x1c>
  800d29a:	4407      	add	r7, r0
  800d29c:	eba8 0800 	sub.w	r8, r8, r0
@@ -30779,7 +30779,7 @@ lwrb_find(const lwrb_t* buff, const void* bts, size_t len, size_t start_offset, 
  800d37a:	f44f 6180 	mov.w	r1, #1024	; 0x400
  800d37e:	f7fd fd81 	bl	800ae84 <_malloc_r>
  800d382:	b918      	cbnz	r0, 800d38c <__submore+0x22>
- 800d384:	f04f 30ff 	mov.w	r0, #4294967295
+ 800d384:	f04f 30ff 	mov.w	r0, #4294967295	; 0xffffffff
  800d388:	e8bd 81f0 	ldmia.w	sp!, {r4, r5, r6, r7, r8, pc}
  800d38c:	f44f 6380 	mov.w	r3, #1024	; 0x400
  800d390:	63a3      	str	r3, [r4, #56]	; 0x38
@@ -30865,7 +30865,7 @@ lwrb_find(const lwrb_t* buff, const void* bts, size_t len, size_t start_offset, 
  800d44a:	f000 f805 	bl	800d458 <__swsetup_r>
  800d44e:	2800      	cmp	r0, #0
  800d450:	d0d5      	beq.n	800d3fe <__swbuf_r+0x20>
- 800d452:	f04f 37ff 	mov.w	r7, #4294967295
+ 800d452:	f04f 37ff 	mov.w	r7, #4294967295	; 0xffffffff
  800d456:	e7f4      	b.n	800d442 <__swbuf_r+0x64>
 
 0800d458 <__swsetup_r>:
@@ -30888,7 +30888,7 @@ lwrb_find(const lwrb_t* buff, const void* bts, size_t len, size_t start_offset, 
  800d47c:	602b      	str	r3, [r5, #0]
  800d47e:	f042 0340 	orr.w	r3, r2, #64	; 0x40
  800d482:	81a3      	strh	r3, [r4, #12]
- 800d484:	f04f 30ff 	mov.w	r0, #4294967295
+ 800d484:	f04f 30ff 	mov.w	r0, #4294967295	; 0xffffffff
  800d488:	e034      	b.n	800d4f4 <__swsetup_r+0x9c>
  800d48a:	0758      	lsls	r0, r3, #29
  800d48c:	d512      	bpl.n	800d4b4 <__swsetup_r+0x5c>
@@ -31233,7 +31233,7 @@ lwrb_find(const lwrb_t* buff, const void* bts, size_t len, size_t start_offset, 
  800d7a4:	f1a0 0210 	sub.w	r2, r0, #16
  800d7a8:	f811 0f01 	ldrb.w	r0, [r1, #1]!
  800d7ac:	f7ff ff76 	bl	800d69c <__hexdig_fun>
- 800d7b0:	f100 3cff 	add.w	ip, r0, #4294967295
+ 800d7b0:	f100 3cff 	add.w	ip, r0, #4294967295	; 0xffffffff
  800d7b4:	fa5f fc8c 	uxtb.w	ip, ip
  800d7b8:	f1bc 0f18 	cmp.w	ip, #24
  800d7bc:	d91d      	bls.n	800d7fa <__gethex+0x132>
@@ -31307,7 +31307,7 @@ lwrb_find(const lwrb_t* buff, const void* bts, size_t len, size_t start_offset, 
  800d86a:	f7fe f823 	bl	800b8b4 <__any_on>
  800d86e:	4683      	mov	fp, r0
  800d870:	b1b8      	cbz	r0, 800d8a2 <__gethex+0x1da>
- 800d872:	f108 33ff 	add.w	r3, r8, #4294967295
+ 800d872:	f108 33ff 	add.w	r3, r8, #4294967295	; 0xffffffff
  800d876:	1159      	asrs	r1, r3, #5
  800d878:	f003 021f 	and.w	r2, r3, #31
  800d87c:	f85a 1021 	ldr.w	r1, [sl, r1, lsl #2]
@@ -31432,7 +31432,7 @@ lwrb_find(const lwrb_t* buff, const void* bts, size_t len, size_t start_offset, 
  800d9a0:	0800f504 	.word	0x0800f504
  800d9a4:	0800f397 	.word	0x0800f397
  800d9a8:	0800f6c9 	.word	0x0800f6c9
- 800d9ac:	f106 38ff 	add.w	r8, r6, #4294967295
+ 800d9ac:	f106 38ff 	add.w	r8, r6, #4294967295	; 0xffffffff
  800d9b0:	f1bb 0f00 	cmp.w	fp, #0
  800d9b4:	d133      	bne.n	800da1e <__gethex+0x356>
  800d9b6:	f1b8 0f00 	cmp.w	r8, #0
@@ -31490,7 +31490,7 @@ lwrb_find(const lwrb_t* buff, const void* bts, size_t len, size_t start_offset, 
  800da4a:	2300      	movs	r3, #0
  800da4c:	4694      	mov	ip, r2
  800da4e:	f852 1b04 	ldr.w	r1, [r2], #4
- 800da52:	f1b1 3fff 	cmp.w	r1, #4294967295
+ 800da52:	f1b1 3fff 	cmp.w	r1, #4294967295	; 0xffffffff
  800da56:	d01e      	beq.n	800da96 <__gethex+0x3ce>
  800da58:	3101      	adds	r1, #1
  800da5a:	f8cc 1000 	str.w	r1, [ip]
@@ -31727,7 +31727,7 @@ lwrb_find(const lwrb_t* buff, const void* bts, size_t len, size_t start_offset, 
  800dc80:	2b00      	cmp	r3, #0
  800dc82:	d0df      	beq.n	800dc44 <__hexnan+0xd4>
  800dc84:	f1c3 0320 	rsb	r3, r3, #32
- 800dc88:	f04f 32ff 	mov.w	r2, #4294967295
+ 800dc88:	f04f 32ff 	mov.w	r2, #4294967295	; 0xffffffff
  800dc8c:	40da      	lsrs	r2, r3
  800dc8e:	f856 3c04 	ldr.w	r3, [r6, #-4]
  800dc92:	4013      	ands	r3, r2
@@ -31825,7 +31825,7 @@ lwrb_find(const lwrb_t* buff, const void* bts, size_t len, size_t start_offset, 
  800dd60:	786c      	ldrb	r4, [r5, #1]
  800dd62:	2310      	movs	r3, #16
  800dd64:	3502      	adds	r5, #2
- 800dd66:	f04f 38ff 	mov.w	r8, #4294967295
+ 800dd66:	f04f 38ff 	mov.w	r8, #4294967295	; 0xffffffff
  800dd6a:	2700      	movs	r7, #0
  800dd6c:	fbb8 f8f3 	udiv	r8, r8, r3
  800dd70:	fb03 f908 	mul.w	r9, r3, r8
@@ -31837,7 +31837,7 @@ lwrb_find(const lwrb_t* buff, const void* bts, size_t len, size_t start_offset, 
  800dd84:	4664      	mov	r4, ip
  800dd86:	42a3      	cmp	r3, r4
  800dd88:	dd23      	ble.n	800ddd2 <_strtoul_l.constprop.0+0xaa>
- 800dd8a:	f1b7 3fff 	cmp.w	r7, #4294967295
+ 800dd8a:	f1b7 3fff 	cmp.w	r7, #4294967295	; 0xffffffff
  800dd8e:	d007      	beq.n	800dda0 <_strtoul_l.constprop.0+0x78>
  800dd90:	4580      	cmp	r8, r0
  800dd92:	d31b      	bcc.n	800ddcc <_strtoul_l.constprop.0+0xa4>
@@ -31863,7 +31863,7 @@ lwrb_find(const lwrb_t* buff, const void* bts, size_t len, size_t start_offset, 
  800ddc6:	d804      	bhi.n	800ddd2 <_strtoul_l.constprop.0+0xaa>
  800ddc8:	3c57      	subs	r4, #87	; 0x57
  800ddca:	e7dc      	b.n	800dd86 <_strtoul_l.constprop.0+0x5e>
- 800ddcc:	f04f 37ff 	mov.w	r7, #4294967295
+ 800ddcc:	f04f 37ff 	mov.w	r7, #4294967295	; 0xffffffff
  800ddd0:	e7e6      	b.n	800dda0 <_strtoul_l.constprop.0+0x78>
  800ddd2:	1c7b      	adds	r3, r7, #1
  800ddd4:	d106      	bne.n	800dde4 <_strtoul_l.constprop.0+0xbc>
@@ -31902,7 +31902,7 @@ lwrb_find(const lwrb_t* buff, const void* bts, size_t len, size_t start_offset, 
  800de16:	238a      	movhi	r3, #138	; 0x8a
  800de18:	6003      	strhi	r3, [r0, #0]
  800de1a:	700a      	strbls	r2, [r1, #0]
- 800de1c:	f04f 30ff 	movhi.w	r0, #4294967295
+ 800de1c:	f04f 30ff 	movhi.w	r0, #4294967295	; 0xffffffff
  800de20:	bf98      	it	ls
  800de22:	2001      	movls	r0, #1
  800de24:	4770      	bx	lr
@@ -32067,7 +32067,7 @@ lwrb_find(const lwrb_t* buff, const void* bts, size_t len, size_t start_offset, 
  800df7e:	d904      	bls.n	800df8a <_raise_r+0x14>
  800df80:	2316      	movs	r3, #22
  800df82:	6003      	str	r3, [r0, #0]
- 800df84:	f04f 30ff 	mov.w	r0, #4294967295
+ 800df84:	f04f 30ff 	mov.w	r0, #4294967295	; 0xffffffff
  800df88:	bd38      	pop	{r3, r4, r5, pc}
  800df8a:	6bc2      	ldr	r2, [r0, #60]	; 0x3c
  800df8c:	b112      	cbz	r2, 800df94 <_raise_r+0x1e>
@@ -32658,7 +32658,7 @@ lwrb_find(const lwrb_t* buff, const void* bts, size_t len, size_t start_offset, 
  800e5f2:	a389      	add	r3, pc, #548	; (adr r3, 800e818 <__ieee754_rem_pio2+0x308>)
  800e5f4:	e9d3 2300 	ldrd	r2, r3, [r3]
  800e5f8:	f7f1 fe50 	bl	800029c <__adddf3>
- 800e5fc:	f04f 3bff 	mov.w	fp, #4294967295
+ 800e5fc:	f04f 3bff 	mov.w	fp, #4294967295	; 0xffffffff
  800e600:	e9ca 0102 	strd	r0, r1, [sl, #8]
  800e604:	e7c4      	b.n	800e590 <__ieee754_rem_pio2+0x80>
  800e606:	a386      	add	r3, pc, #536	; (adr r3, 800e820 <__ieee754_rem_pio2+0x310>)
@@ -32716,7 +32716,7 @@ lwrb_find(const lwrb_t* buff, const void* bts, size_t len, size_t start_offset, 
  800e69e:	460d      	mov	r5, r1
  800e6a0:	dc0d      	bgt.n	800e6be <__ieee754_rem_pio2+0x1ae>
  800e6a2:	4b6e      	ldr	r3, [pc, #440]	; (800e85c <__ieee754_rem_pio2+0x34c>)
- 800e6a4:	f10b 32ff 	add.w	r2, fp, #4294967295
+ 800e6a4:	f10b 32ff 	add.w	r2, fp, #4294967295	; 0xffffffff
  800e6a8:	f853 3022 	ldr.w	r3, [r3, r2, lsl #2]
  800e6ac:	4543      	cmp	r3, r8
  800e6ae:	d006      	beq.n	800e6be <__ieee754_rem_pio2+0x1ae>
@@ -32958,7 +32958,7 @@ lwrb_find(const lwrb_t* buff, const void* bts, size_t len, size_t start_offset, 
  800e94a:	f853 3021 	ldr.w	r3, [r3, r1, lsl #2]
  800e94e:	9300      	str	r3, [sp, #0]
  800e950:	9b06      	ldr	r3, [sp, #24]
- 800e952:	f103 33ff 	add.w	r3, r3, #4294967295
+ 800e952:	f103 33ff 	add.w	r3, r3, #4294967295	; 0xffffffff
  800e956:	bfa8      	it	ge
  800e958:	1ed4      	subge	r4, r2, #3
  800e95a:	9305      	str	r3, [sp, #20]
@@ -33150,7 +33150,7 @@ lwrb_find(const lwrb_t* buff, const void* bts, size_t len, size_t start_offset, 
  800eb6a:	f84b 0b04 	str.w	r0, [fp], #4
  800eb6e:	ec51 0b18 	vmov	r0, r1, d8
  800eb72:	f7f1 fb93 	bl	800029c <__adddf3>
- 800eb76:	f109 39ff 	add.w	r9, r9, #4294967295
+ 800eb76:	f109 39ff 	add.w	r9, r9, #4294967295	; 0xffffffff
  800eb7a:	4606      	mov	r6, r0
  800eb7c:	460f      	mov	r7, r1
  800eb7e:	e75b      	b.n	800ea38 <__kernel_rem_pio2+0x108>
@@ -33534,7 +33534,7 @@ lwrb_find(const lwrb_t* buff, const void* bts, size_t len, size_t start_offset, 
  800ef88:	ed9d 7b00 	vldr	d7, [sp]
  800ef8c:	e9c4 0102 	strd	r0, r1, [r4, #8]
  800ef90:	ed84 7b00 	vstr	d7, [r4]
- 800ef94:	f10a 3aff 	add.w	sl, sl, #4294967295
+ 800ef94:	f10a 3aff 	add.w	sl, sl, #4294967295	; 0xffffffff
  800ef98:	e757      	b.n	800ee4a <__kernel_rem_pio2+0x51a>
  800ef9a:	e974 2302 	ldrd	r2, r3, [r4, #-8]!
  800ef9e:	f7f1 f97d 	bl	800029c <__adddf3>
@@ -33707,7 +33707,7 @@ lwrb_find(const lwrb_t* buff, const void* bts, size_t len, size_t start_offset, 
  800f166:	ec41 0b10 	vmov	d0, r0, r1
  800f16a:	e8bd 81f0 	ldmia.w	sp!, {r4, r5, r6, r7, r8, pc}
  800f16e:	f2a3 4313 	subw	r3, r3, #1043	; 0x413
- 800f172:	f04f 37ff 	mov.w	r7, #4294967295
+ 800f172:	f04f 37ff 	mov.w	r7, #4294967295	; 0xffffffff
  800f176:	40df      	lsrs	r7, r3
  800f178:	4238      	tst	r0, r7
  800f17a:	d0f4      	beq.n	800f166 <floor+0x96>
