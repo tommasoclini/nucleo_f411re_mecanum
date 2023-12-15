@@ -35,6 +35,7 @@ void motor_stop(motor_t* motor){
  */
 void motor_run(motor_t* motor, float power){
 	if (power){
+		power = fminf(fmaxf(power, -1.0f), 1.0f);
 		bool direction = power > 0.0;
 		HAL_GPIO_WritePin(motor->dir_pin_1_port, motor->dir_pin_1, direction ? GPIO_PIN_SET : GPIO_PIN_RESET);
 		HAL_GPIO_WritePin(motor->dir_pin_2_port, motor->dir_pin_2, !direction ? GPIO_PIN_SET : GPIO_PIN_RESET);
@@ -67,7 +68,8 @@ void mecanum_robot_move(four_wheeled_robot_t *mecanum_robot, float power, float 
 		return;
 	}
 
-	power = fmaxf(fminf(power, 1.0), 0.0);
+	power = fminf(fmaxf(power, 0.0f), 1.0f);
+
 
 	float angle_offset = angle - M_PI_4;
 	float sine = sin(angle_offset);

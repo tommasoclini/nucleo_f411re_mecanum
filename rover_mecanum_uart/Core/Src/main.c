@@ -639,7 +639,7 @@ void StartDefaultTask(void *argument)
     int res;
     if ((res = sscanf(temp_buff, packet_format, &power, &angle, &angular_speed)) == 3) {
       printf("Power: %f, Angle: %f, Angular Speed: %f\r\n", power, angle, angular_speed);
-      mecanum_robot_move(&robot, power, angle, angular_speed);
+      mecanum_robot_move(&robot, power, angle, angular_speed / 5.0f);
     } else {
       printf("Wrong packet payload format(%i)\r\n", res);
     }
