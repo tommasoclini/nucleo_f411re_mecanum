@@ -152,11 +152,7 @@ void StartDefaultTask(void *argument);
 
 /* USER CODE BEGIN PFP */
 
-#ifdef __GNUC__
-#define PUTCHAR_PROTOTYPE int __io_putchar(int ch)
-#else
-#define PUTCHAR_PROTOTYPE int fputc(int ch, FILE *f)
-#endif
+int _write(int file, char *ptr, int len);
 
 /* USER CODE END PFP */
 
@@ -570,11 +566,10 @@ static void MX_GPIO_Init(void)
 
 /* USER CODE BEGIN 4 */
 
-PUTCHAR_PROTOTYPE {
-  HAL_UART_Transmit(&huart2, (uint8_t*) &ch, 1, HAL_MAX_DELAY);
-  return ch;
+int _write(int file, char *ptr, int len){
+	HAL_UART_Transmit(&huart2, (uint8_t*)ptr, len, HAL_MAX_DELAY);
+	return len;
 }
-
 
 void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef *huart, uint16_t Size) {
   if (huart->Instance == USART1) {
@@ -615,8 +610,6 @@ void StartDefaultTask(void *argument)
     if (full == old_full && full != UART_BUFFER_SIZE){
       continue;
     }
-
-    printf("%d\r\n", full);
 
     size_t found_start;
     if (lwrb_find(&uart_buffer, packet_start_sequence, sizeof(packet_start_sequence), 0, &found_start) != 1){
