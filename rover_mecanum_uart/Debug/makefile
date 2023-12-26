@@ -10,6 +10,8 @@ RM := rm -rf
 # All of the sources participating in the build are defined here
 -include sources.mk
 -include lwrb/src/lwrb/subdir.mk
+-include lwpkt/src/lwpkt/subdir.mk
+-include cJSON-1.7.16/subdir.mk
 -include Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/subdir.mk
 -include Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/subdir.mk
 -include Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/subdir.mk
@@ -57,6 +59,9 @@ default.size.stdout \
 OBJDUMP_LIST += \
 rover_mecanum_uart.list \
 
+OBJCOPY_HEX += \
+rover_mecanum_uart.hex \
+
 
 # All Target
 all: main-build
@@ -80,12 +85,17 @@ rover_mecanum_uart.list: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DE
 	@echo 'Finished building: $@'
 	@echo ' '
 
+rover_mecanum_uart.hex: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-objcopy  -O ihex $(EXECUTABLES) "rover_mecanum_uart.hex"
+	@echo 'Finished building: $@'
+	@echo ' '
+
 # Other Targets
 clean:
-	-$(RM) default.size.stdout rover_mecanum_uart.elf rover_mecanum_uart.list rover_mecanum_uart.map
+	-$(RM) default.size.stdout rover_mecanum_uart.elf rover_mecanum_uart.hex rover_mecanum_uart.list rover_mecanum_uart.map
 	-@echo ' '
 
-secondary-outputs: $(SIZE_OUTPUT) $(OBJDUMP_LIST)
+secondary-outputs: $(SIZE_OUTPUT) $(OBJDUMP_LIST) $(OBJCOPY_HEX)
 
 fail-specified-linker-script-missing:
 	@echo 'Error: Cannot find the specified linker script. Check the linker settings in the build configuration.'

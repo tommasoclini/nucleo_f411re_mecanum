@@ -25,12 +25,13 @@
 
 #include <mecanum.h>
 #include <lwrb/lwrb.h>
+#include <lwpkt/lwpkt.h>
+#include <cJSON.h>
 #include <stdio.h>
 
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
-typedef StaticTask_t osStaticThreadDef_t;
 /* USER CODE BEGIN PTD */
 
 /* USER CODE END PTD */
@@ -68,7 +69,11 @@ typedef StaticTask_t osStaticThreadDef_t;
 #define ROBOT_BL_MOTOR_DIR_PIN_2 ROBOT_IN4_A_Pin
 #define ROBOT_BR_MOTOR_DIR_PIN_2 ROBOT_IN2_A_Pin
 
-#define UART_BUFFER_SIZE 256
+#define lwpkt_init_event_flag 			((uint32_t)0x00000001)
+
+#define UART_RX_BUFFER_SIZE 512
+#define UART_DMA_RX_BUFFER_SIZE 256
+#define UART_TX_BUFFER_SIZE 512
 
 /* USER CODE END PD */
 
@@ -87,15 +92,27 @@ DMA_HandleTypeDef hdma_usart1_rx;
 
 /* Definitions for defaultTask */
 osThreadId_t defaultTaskHandle;
-uint32_t defaultTaskBuffer[ 512 ];
-osStaticThreadDef_t defaultTaskControlBlock;
 const osThreadAttr_t defaultTask_attributes = {
   .name = "defaultTask",
-  .cb_mem = &defaultTaskControlBlock,
-  .cb_size = sizeof(defaultTaskControlBlock),
-  .stack_mem = &defaultTaskBuffer[0],
-  .stack_size = sizeof(defaultTaskBuffer),
+  .stack_size = 256 * 4,
   .priority = (osPriority_t) osPriorityNormal,
+};
+/* Definitions for uart_rb_task */
+osThreadId_t uart_rb_taskHandle;
+const osThreadAttr_t uart_rb_task_attributes = {
+  .name = "uart_rb_task",
+  .stack_size = 256 * 4,
+  .priority = (osPriority_t) osPriorityAboveNormal,
+};
+/* Definitions for uart_rb_queue */
+osMessageQueueId_t uart_rb_queueHandle;
+const osMessageQueueAttr_t uart_rb_queue_attributes = {
+  .name = "uart_rb_queue"
+};
+/* Definitions for lwpkt_events */
+osEventFlagsId_t lwpkt_eventsHandle;
+const osEventFlagsAttr_t lwpkt_events_attributes = {
+  .name = "lwpkt_events"
 };
 /* USER CODE BEGIN PV */
 
@@ -130,13 +147,20 @@ motor_t br_motor = { .dir_pin_1_port = ROBOT_BR_MOTOR_DIR_PIN_1_PORT,
 four_wheeled_robot_t robot = { .fl_motor = &fl_motor, .fr_motor = &fr_motor,
     .bl_motor = &bl_motor, .br_motor = &br_motor, };
 
-lwrb_t uart_buffer;
-uint8_t uart_buffer_data[UART_BUFFER_SIZE];
+lwpkt_t uart_lwpkt;
 
-const char packet_start_sequence[2] = "AA";
-const char packet_end_sequence[2] = "\r\n";
+uint8_t uart_dma_rx_buffer[UART_DMA_RX_BUFFER_SIZE];
 
-const char packet_format[] = "P=%f,A=%f,AS=%f";
+lwrb_t uart_rx_buffer;
+uint8_t uart_rx_data_buffer[UART_RX_BUFFER_SIZE];
+
+lwrb_t uart_tx_buffer;
+uint8_t uart_tx_data_buffer[UART_TX_BUFFER_SIZE];
+
+const cJSON_Hooks cjson_hooks = {
+		.malloc_fn = pvPortMalloc,
+		.free_fn = vPortFree
+};
 
 /* USER CODE END PV */
 
@@ -149,10 +173,14 @@ static void MX_TIM1_Init(void);
 static void MX_TIM2_Init(void);
 static void MX_USART1_UART_Init(void);
 void StartDefaultTask(void *argument);
+void Startuart_rb_task(void *argument);
 
 /* USER CODE BEGIN PFP */
 
 int _write(int file, char *ptr, int len);
+
+static void uart_lwpkt_evt_fn(lwpkt_t* pkt, lwpkt_evt_type_t type);
+void uart_tx_rb_evt_fn(lwrb_t* buff, lwrb_evt_type_t type, size_t len);
 
 /* USER CODE END PFP */
 
@@ -213,6 +241,10 @@ int main(void)
   /* start timers, add new ones, ... */
   /* USER CODE END RTOS_TIMERS */
 
+  /* Create the queue(s) */
+  /* creation of uart_rb_queue */
+  uart_rb_queueHandle = osMessageQueueNew (10, sizeof(uint16_t), &uart_rb_queue_attributes);
+
   /* USER CODE BEGIN RTOS_QUEUES */
   /* add queues, ... */
   /* USER CODE END RTOS_QUEUES */
@@ -221,9 +253,16 @@ int main(void)
   /* creation of defaultTask */
   defaultTaskHandle = osThreadNew(StartDefaultTask, NULL, &defaultTask_attributes);
 
+  /* creation of uart_rb_task */
+  uart_rb_taskHandle = osThreadNew(Startuart_rb_task, NULL, &uart_rb_task_attributes);
+
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
   /* USER CODE END RTOS_THREADS */
+
+  /* Create the event(s) */
+  /* creation of lwpkt_events */
+  lwpkt_eventsHandle = osEventFlagsNew(&lwpkt_events_attributes);
 
   /* USER CODE BEGIN RTOS_EVENTS */
   /* add events, ... */
@@ -571,13 +610,67 @@ int _write(int file, char *ptr, int len){
 	return len;
 }
 
+void uart_tx_rb_evt_fn(lwrb_t* buff, lwrb_evt_type_t type, size_t len){
+	switch (type) {
+		case LWRB_EVT_WRITE:
+			lwrb_sz_t size = lwrb_get_linear_block_read_length(buff);
+			HAL_UART_Transmit(&huart1, (uint8_t*)lwrb_get_linear_block_read_address(buff), size, HAL_MAX_DELAY);
+			lwrb_skip(buff, size);
+			size = lwrb_get_linear_block_read_length(buff);
+			if (size > 0) {
+					HAL_UART_Transmit(&huart1, (uint8_t*)lwrb_get_linear_block_read_address(buff), size, HAL_MAX_DELAY);
+			}
+			lwrb_skip(buff, size);
+
+			break;
+		default:
+			break;
+	}
+}
+
+static void uart_lwpkt_evt_fn(lwpkt_t* pkt, lwpkt_evt_type_t type){
+	switch (type) {
+		case LWPKT_EVT_PKT:
+			size_t len = lwpkt_get_data_len(pkt);
+			char* data = (char*)lwpkt_get_data(pkt);
+			printf("Packet received, size(%d), data(%.*s)\r\n", len, len, data);
+
+			cJSON* parsed_json = cJSON_ParseWithLength(data, len);
+			if (cJSON_IsObject(parsed_json)){
+				printf("A json object\r\n");
+
+				cJSON* power_json = cJSON_GetObjectItem(parsed_json, "power");
+				cJSON* theta_json = cJSON_GetObjectItem(parsed_json, "theta");
+				cJSON* turn_json = cJSON_GetObjectItem(parsed_json, "turn");
+
+				if (cJSON_IsNumber(power_json) && cJSON_IsNumber(theta_json) && cJSON_IsNumber(turn_json)){
+					float power = cJSON_GetNumberValue(power_json);
+					float theta = cJSON_GetNumberValue(theta_json);
+					float turn = cJSON_GetNumberValue(turn_json);
+
+					printf("Power: %f, Theta: %f, Turn: %f\r\n", power, theta, turn);
+
+					mecanum_robot_move(&robot, power, theta, turn);
+				} else {
+					printf("One or more key/value pairs missing\r\n");
+				}
+			} else {
+				printf("Not a json object\r\n");
+			}
+
+			cJSON_free(parsed_json);
+			break;
+		default:
+			break;
+	}
+}
+
 void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef *huart, uint16_t Size) {
   if (huart->Instance == USART1) {
-    static uint16_t pos = 0;
-    lwrb_advance(&uart_buffer, Size >= pos ? Size - pos : Size - pos + sizeof(uart_buffer_data));
-    pos = Size;
+    osMessageQueuePut(uart_rb_queueHandle, &Size, 0, 0);
   }
 }
+
 
 /* USER CODE END 4 */
 
@@ -594,50 +687,60 @@ void StartDefaultTask(void *argument)
 
   mecanum_robot_init(&robot);
 
-  lwrb_init(&uart_buffer, uart_buffer_data, sizeof(uart_buffer_data));
+  printf("Start\r\n");
+	osEventFlagsWait(lwpkt_eventsHandle,
+									lwpkt_init_event_flag,
+									osFlagsNoClear | osFlagsWaitAll,
+									osWaitForever);
 
-  HAL_UARTEx_ReceiveToIdle_DMA(&huart1, uart_buffer_data, sizeof(uart_buffer_data));
+	printf("lwpkt initialized\r\n");
 
-  size_t full = 0;
-  size_t old_full = 0;
+	cJSON_InitHooks(&cjson_hooks);
 
-  /* Infinite loop */
-  for (;;) {
-    old_full = full;
-    osDelay(2);
+	lwpkt_set_evt_fn(&uart_lwpkt, uart_lwpkt_evt_fn);
 
-    full = lwrb_get_full(&uart_buffer);
-    if (full == old_full && full != UART_BUFFER_SIZE){
-      continue;
-    }
+	/* Infinite loop */
+	for(;;)
+	{
+		uint32_t current_time = HAL_GetTick();
+		lwpkt_process(&uart_lwpkt, current_time);
 
-    size_t found_start;
-    if (lwrb_find(&uart_buffer, packet_start_sequence, sizeof(packet_start_sequence), 0, &found_start) != 1){
-      continue;
-    }
-
-    size_t found_end;
-    if (lwrb_find(&uart_buffer, packet_end_sequence, sizeof(packet_end_sequence), found_start + sizeof(packet_start_sequence), &found_end) != 1){
-      continue;
-    }
-
-    (void)lwrb_skip(&uart_buffer, found_start + sizeof(packet_start_sequence));
-    char temp_buff[UART_BUFFER_SIZE];
-
-    size_t read_size = lwrb_read(&uart_buffer, temp_buff, found_end - found_start - sizeof(packet_start_sequence));
-    (void)lwrb_skip(&uart_buffer, sizeof(packet_end_sequence));
-
-    printf("Selected packet: %.*s\r\n", read_size, temp_buff);
-    float power, angle, angular_speed;
-    int res;
-    if ((res = sscanf(temp_buff, packet_format, &power, &angle, &angular_speed)) == 3) {
-      printf("Power: %f, Angle: %f, Angular Speed: %f\r\n", power, angle, angular_speed);
-      mecanum_robot_move(&robot, power, angle, angular_speed / 5.0f);
-    } else {
-      printf("Wrong packet payload format(%i)\r\n", res);
-    }
-  }
+		osDelay(10);
+	}
   /* USER CODE END 5 */
+}
+
+/* USER CODE BEGIN Header_Startuart_rb_task */
+/**
+* @brief Function implementing the uart_rb_task thread.
+* @param argument: Not used
+* @retval None
+*/
+/* USER CODE END Header_Startuart_rb_task */
+void Startuart_rb_task(void *argument)
+{
+  /* USER CODE BEGIN Startuart_rb_task */
+	lwrb_init(&uart_rx_buffer, uart_rx_data_buffer, UART_RX_BUFFER_SIZE);
+
+	lwrb_init(&uart_tx_buffer, uart_tx_data_buffer, UART_TX_BUFFER_SIZE);
+	lwrb_set_evt_fn(&uart_tx_buffer, uart_tx_rb_evt_fn);
+
+	lwpkt_init(&uart_lwpkt, &uart_tx_buffer, &uart_rx_buffer);
+	osEventFlagsSet(lwpkt_eventsHandle, lwpkt_init_event_flag);
+
+	HAL_UARTEx_ReceiveToIdle_DMA(&huart1, uart_dma_rx_buffer, UART_DMA_RX_BUFFER_SIZE);
+
+	/* Infinite loop */
+	for(;;)
+	{
+		uint16_t Size;
+		osMessageQueueGet(uart_rb_queueHandle, &Size, NULL, osWaitForever);
+
+		static uint16_t pos = 0;
+		lwrb_write(&uart_rx_buffer, &uart_dma_rx_buffer[pos], Size >= pos ? Size - pos : Size - pos + UART_DMA_RX_BUFFER_SIZE);
+		pos = Size;
+	}
+  /* USER CODE END Startuart_rb_task */
 }
 
 /**
