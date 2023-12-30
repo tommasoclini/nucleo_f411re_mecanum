@@ -30,7 +30,7 @@ Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 \
 Middlewares/Third_Party/FreeRTOS/Source \
 Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F \
 Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang \
-cJSON-1.7.16 \
+cJSON-1.7.17 \
 lwpkt/src/lwpkt \
 lwrb/src/lwrb \
 

@@ -11,7 +11,7 @@ RM := rm -rf
 -include sources.mk
 -include lwrb/src/lwrb/subdir.mk
 -include lwpkt/src/lwpkt/subdir.mk
--include cJSON-1.7.16/subdir.mk
+-include cJSON-1.7.17/subdir.mk
 -include Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/subdir.mk
 -include Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/subdir.mk
 -include Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/subdir.mk

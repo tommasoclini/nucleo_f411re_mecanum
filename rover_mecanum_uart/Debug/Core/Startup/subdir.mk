@@ -16,7 +16,7 @@ S_DEPS += \
 
 # Each subdirectory must supply rules for building sources it contributes
 Core/Startup/%.o: ../Core/Startup/%.s Core/Startup/subdir.mk
-	arm-none-eabi-gcc -mcpu=cortex-m4 -g3 -DDEBUG -c -I"/home/tommaso/git_repos/esp32_cam_nucleo_f411re_mecanum/nucleo_f411re_mecanum/rover_mecanum_uart/lwrb/src/include" -I"/home/tommaso/git_repos/esp32_cam_nucleo_f411re_mecanum/nucleo_f411re_mecanum/rover_mecanum_uart/cJSON-1.7.16" -I"/home/tommaso/git_repos/esp32_cam_nucleo_f411re_mecanum/nucleo_f411re_mecanum/rover_mecanum_uart/lwpkt/src/include" -x assembler-with-cpp -MMD -MP -MF"$(@:%.o=%.d)" -MT"$@" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "$@" "$<"
+	arm-none-eabi-gcc -mcpu=cortex-m4 -g3 -DDEBUG -c -I"/home/tommaso/git_repos/esp32_cam_nucleo_f411re_mecanum/nucleo_f411re_mecanum/rover_mecanum_uart/lwrb/src/include" -I"/home/tommaso/git_repos/esp32_cam_nucleo_f411re_mecanum/nucleo_f411re_mecanum/rover_mecanum_uart/lwpkt/src/include" -x assembler-with-cpp -MMD -MP -MF"$(@:%.o=%.d)" -MT"$@" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "$@" "$<"
 
 clean: clean-Core-2f-Startup
 

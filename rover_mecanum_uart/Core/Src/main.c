@@ -26,8 +26,8 @@
 #include <mecanum.h>
 #include <lwrb/lwrb.h>
 #include <lwpkt/lwpkt.h>
-#include <cJSON.h>
 #include <stdio.h>
+#include "../../cJSON-1.7.17/cJSON.h"
 
 /* USER CODE END Includes */
 
@@ -642,17 +642,23 @@ static void uart_lwpkt_evt_fn(lwpkt_t* pkt, lwpkt_evt_type_t type){
 				cJSON* power_json = cJSON_GetObjectItem(parsed_json, "power");
 				cJSON* theta_json = cJSON_GetObjectItem(parsed_json, "theta");
 				cJSON* turn_json = cJSON_GetObjectItem(parsed_json, "turn");
+				cJSON* stop_json = cJSON_GetObjectItem(parsed_json, "stop");
 
-				if (cJSON_IsNumber(power_json) && cJSON_IsNumber(theta_json) && cJSON_IsNumber(turn_json)){
-					float power = cJSON_GetNumberValue(power_json);
-					float theta = cJSON_GetNumberValue(theta_json);
-					float turn = cJSON_GetNumberValue(turn_json);
-
-					printf("Power: %f, Theta: %f, Turn: %f\r\n", power, theta, turn);
-
-					mecanum_robot_move(&robot, power, theta, turn);
+				if (cJSON_IsTrue(stop_json)) {
+					printf("Robot stopped\r\n");
+					mecanum_robot_stop(&robot);
 				} else {
-					printf("One or more key/value pairs missing\r\n");
+					if (cJSON_IsNumber(power_json) && cJSON_IsNumber(theta_json) && cJSON_IsNumber(turn_json)){
+						float power = cJSON_GetNumberValue(power_json);
+						float theta = cJSON_GetNumberValue(theta_json);
+						float turn = cJSON_GetNumberValue(turn_json);
+
+						printf("Power: %f, Theta: %f, Turn: %f\r\n", power, theta, turn);
+
+						mecanum_robot_move(&robot, power, theta, turn);
+					} else {
+						printf("One or more key/value pairs missing\r\n");
+					}
 				}
 			} else {
 				printf("Not a json object\r\n");
