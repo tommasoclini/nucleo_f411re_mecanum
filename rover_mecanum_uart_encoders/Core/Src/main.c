@@ -194,8 +194,8 @@ four_wheeled_robot_t robot = {
 };
 
 const cJSON_Hooks cjson_hooks = {
-		.malloc_fn = pvPortMalloc,
-		.free_fn = vPortFree
+		.malloc_fn = malloc,
+		.free_fn = free
 };
 
 static void uart_lwpkt_evt_fn(lwpkt_t* pkt, lwpkt_evt_type_t type);
@@ -834,6 +834,7 @@ static void uart_lwpkt_evt_fn(lwpkt_t* pkt, lwpkt_evt_type_t type){
 			printf("Packet received, size(%d), data(%.*s)\r\n", len, len, data);
 
 			cJSON* parsed_json = cJSON_ParseWithLength(data, len);
+			printf("json: %lu\r\n", parsed_json);
 			if (cJSON_IsObject(parsed_json)){
 				printf("A json object\r\n");
 
@@ -912,10 +913,10 @@ void StartDefaultTask(void *argument)
 	cJSON_InitHooks(&cjson_hooks);
 	printf("cJSON hooks set\r\n");
 
+	mecanum_robot_init(&robot, HAL_GetTick());
+
 	lwpkt_lwrb_uart_init(&init_data);
 	printf("lwpkt initialized\r\n");
-
-	mecanum_robot_init(&robot, HAL_GetTick());
 
 	//HAL_TIM_Base_Start_IT(&htim10);
 
@@ -969,7 +970,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
   }
   /* USER CODE BEGIN Callback 1 */
 
-  if (htim->Instance == TIM10) {
+  else if (htim->Instance == TIM10) {
 
   	mecanum_robot_encoders_callback(&robot, HAL_GetTick());
 

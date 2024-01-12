@@ -35,7 +35,7 @@ const osMessageQueueAttr_t uart_rb_queue_attributes = {
 osThreadId_t lwpkt_lwrb_uart_taskHandle;
 const osThreadAttr_t lwpkt_lwrb_uart_task_attributes = {
   .name = "lwpkt_lwrb_uart_task",
-  .stack_size = 512 * 4,
+  .stack_size = 1024 * 4,
   .priority = (osPriority_t) osPriorityAboveNormal,
 };
 
