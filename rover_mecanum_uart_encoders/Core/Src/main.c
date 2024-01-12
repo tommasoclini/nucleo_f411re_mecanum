@@ -736,7 +736,7 @@ static void MX_USART6_UART_Init(void)
   huart6.Init.WordLength = UART_WORDLENGTH_8B;
   huart6.Init.StopBits = UART_STOPBITS_1;
   huart6.Init.Parity = UART_PARITY_NONE;
-  huart6.Init.Mode = UART_MODE_RX;
+  huart6.Init.Mode = UART_MODE_TX_RX;
   huart6.Init.HwFlowCtl = UART_HWCONTROL_NONE;
   huart6.Init.OverSampling = UART_OVERSAMPLING_16;
   if (HAL_UART_Init(&huart6) != HAL_OK)
@@ -941,8 +941,8 @@ void StartDefaultTask(void *argument)
 		char* output = cJSON_Print(root_object);
 		size_t size = strlen(output);
 
-		uart_lwpkt_write(output, size);
-		//printf("%.*s\r\n", size, output);
+		uart_lwpkt_write((void*)output, size);
+		printf("fl:%f;fr:%f;bl:%f;br:%f\r\n", speeds.fl_speed, speeds.fr_speed, speeds.bl_speed, speeds.br_speed);
 
 		cJSON_free(root_object);
 		cjson_hooks.free_fn(output);
@@ -986,7 +986,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 
   	xQueueOverwriteFromISR((QueueHandle_t)mecanum_encoder_speeds_queueHandle, &speeds, &xHigherPriorityTaskWoken);
 
-		portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
+	portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
 
 	}
 
