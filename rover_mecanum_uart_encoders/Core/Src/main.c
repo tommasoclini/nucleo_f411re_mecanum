@@ -843,7 +843,7 @@ static void uart_lwpkt_evt_fn(lwpkt_t* pkt, lwpkt_evt_type_t type){
 				cJSON* turn_json = cJSON_GetObjectItem(parsed_json, "turn");
 				cJSON* stop_json = cJSON_GetObjectItem(parsed_json, "stop");
 
-				//osSemaphoreAcquire(mecanum_semHandle, osWaitForever);
+				osSemaphoreAcquire(mecanum_semHandle, osWaitForever);
 
 				if (cJSON_IsTrue(stop_json)) {
 					printf("Robot stopped\r\n");
@@ -862,7 +862,7 @@ static void uart_lwpkt_evt_fn(lwpkt_t* pkt, lwpkt_evt_type_t type){
 					}
 				}
 
-				//osSemaphoreRelease(mecanum_semHandle);
+				osSemaphoreRelease(mecanum_semHandle);
 
 			} else {
 				printf("Not a json object\r\n");
@@ -918,12 +918,12 @@ void StartDefaultTask(void *argument)
 	lwpkt_lwrb_uart_init(&init_data);
 	printf("lwpkt initialized\r\n");
 
-	//HAL_TIM_Base_Start_IT(&htim10);
+	HAL_TIM_Base_Start_IT(&htim10);
 
 	/* Infinite loop */
 	for(;;)
 	{
-		/*four_wheeled_robot_encoders_speeds_t speeds;
+		four_wheeled_robot_encoders_speeds_t speeds;
 		osMessageQueueGet(mecanum_encoder_speeds_queueHandle, &speeds, NULL, osWaitForever);
 
 		cJSON* root_object = cJSON_CreateObject();
@@ -945,7 +945,7 @@ void StartDefaultTask(void *argument)
 		//printf("%.*s\r\n", size, output);
 
 		cJSON_free(root_object);
-		cjson_hooks.free_fn(output);*/
+		cjson_hooks.free_fn(output);
 
 		osDelay(1000);
 	}
