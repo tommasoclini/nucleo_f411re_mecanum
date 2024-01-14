@@ -944,7 +944,7 @@ void StartDefaultTask(void *argument)
 		uart_lwpkt_write((void*)output, size);
 		printf("fl:%f;fr:%f;bl:%f;br:%f\r\n", speeds.fl_speed, speeds.fr_speed, speeds.bl_speed, speeds.br_speed);
 
-		cJSON_free(root_object);
+		cJSON_Delete(root_object);
 		cjson_hooks.free_fn(output);
 
 		osDelay(1000);
