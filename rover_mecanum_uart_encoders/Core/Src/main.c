@@ -194,8 +194,8 @@ four_wheeled_robot_t robot = {
 };
 
 const cJSON_Hooks cjson_hooks = {
-		.malloc_fn = malloc,
-		.free_fn = free
+		.malloc_fn = pvPortMalloc,
+		.free_fn = vPortFree
 };
 
 static void uart_lwpkt_evt_fn(lwpkt_t* pkt, lwpkt_evt_type_t type);
@@ -834,7 +834,6 @@ static void uart_lwpkt_evt_fn(lwpkt_t* pkt, lwpkt_evt_type_t type){
 			printf("Packet received, size(%d), data(%.*s)\r\n", len, len, data);
 
 			cJSON* parsed_json = cJSON_ParseWithLength(data, len);
-			printf("json: %lu\r\n", parsed_json);
 			if (cJSON_IsObject(parsed_json)){
 				printf("A json object\r\n");
 

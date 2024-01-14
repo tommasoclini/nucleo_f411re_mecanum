@@ -12,8 +12,8 @@
 ../Core/Src/main.c:773:13:MX_GPIO_Init	1
 ../Core/Src/main.c:824:5:_write	1
 ../Core/Src/main.c:829:13:uart_lwpkt_evt_fn	9
-../Core/Src/main.c:878:6:HAL_UARTEx_RxEventCallback	2
-../Core/Src/main.c:884:6:HAL_GPIO_EXTI_Callback	4
-../Core/Src/main.c:908:6:StartDefaultTask	1
-../Core/Src/main.c:963:6:HAL_TIM_PeriodElapsedCallback	4
-../Core/Src/main.c:1000:6:Error_Handler	1
+../Core/Src/main.c:877:6:HAL_UARTEx_RxEventCallback	2
+../Core/Src/main.c:883:6:HAL_GPIO_EXTI_Callback	4
+../Core/Src/main.c:907:6:StartDefaultTask	1
+../Core/Src/main.c:962:6:HAL_TIM_PeriodElapsedCallback	4
+../Core/Src/main.c:999:6:Error_Handler	1

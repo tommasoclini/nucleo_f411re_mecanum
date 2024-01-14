@@ -68,8 +68,8 @@ all: main-build
 main-build: rover_mecanum_uart_encoders.elf secondary-outputs
 
 # Tool invocations
-rover_mecanum_uart_encoders.elf rover_mecanum_uart_encoders.map: $(OBJS) $(USER_OBJS) /home/tommaso/git_repos/esp32_cam_nucleo_f411re_mecanum/nucleo_f411re_mecanum/rover_mecanum_uart_encoders/STM32F411RETX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-gcc -o "rover_mecanum_uart_encoders.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"/home/tommaso/git_repos/esp32_cam_nucleo_f411re_mecanum/nucleo_f411re_mecanum/rover_mecanum_uart_encoders/STM32F411RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="rover_mecanum_uart_encoders.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -u _printf_float -Wl,--start-group -lc -lm -Wl,--end-group
+rover_mecanum_uart_encoders.elf rover_mecanum_uart_encoders.map: $(OBJS) $(USER_OBJS) /home/tommaso/git_repos/nucleo_f411re_mecanum/rover_mecanum_uart_encoders/STM32F411RETX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-gcc -o "rover_mecanum_uart_encoders.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"/home/tommaso/git_repos/nucleo_f411re_mecanum/rover_mecanum_uart_encoders/STM32F411RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="rover_mecanum_uart_encoders.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -u _printf_float -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 
