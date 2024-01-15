@@ -867,7 +867,7 @@ static void uart_lwpkt_evt_fn(lwpkt_t* pkt, lwpkt_evt_type_t type){
 				printf("Not a json object\r\n");
 			}
 
-			cJSON_free(parsed_json);
+			cJSON_Delete(parsed_json);
 			break;
 		default:
 			break;
