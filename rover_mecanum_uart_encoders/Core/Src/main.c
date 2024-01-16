@@ -837,9 +837,9 @@ static void uart_lwpkt_evt_fn(lwpkt_t* pkt, lwpkt_evt_type_t type){
 			if (cJSON_IsObject(parsed_json)){
 				printf("A json object\r\n");
 
-				cJSON* power_json = cJSON_GetObjectItem(parsed_json, "power");
-				cJSON* theta_json = cJSON_GetObjectItem(parsed_json, "theta");
-				cJSON* turn_json = cJSON_GetObjectItem(parsed_json, "turn");
+				cJSON* power_json = cJSON_GetObjectItem(parsed_json, "p");
+				cJSON* theta_json = cJSON_GetObjectItem(parsed_json, "th");
+				cJSON* turn_json = cJSON_GetObjectItem(parsed_json, "tu");
 				cJSON* stop_json = cJSON_GetObjectItem(parsed_json, "stop");
 
 				osSemaphoreAcquire(mecanum_semHandle, osWaitForever);
