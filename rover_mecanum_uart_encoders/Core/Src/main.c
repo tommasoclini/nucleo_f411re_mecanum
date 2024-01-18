@@ -872,7 +872,7 @@ static void uart_lwpkt_evt_fn(lwpkt_t* pkt, lwpkt_evt_type_t type){
 
 				osSemaphoreRelease(mecanum_semHandle);
 
-				osTimerStart(timerHandle, pdMS_TO_TICKS(200));
+				osTimerStart(timerHandle, pdMS_TO_TICKS(300));
 
 			} else {
 				printf("Not a json object\r\n");
