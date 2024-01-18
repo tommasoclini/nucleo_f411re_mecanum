@@ -119,6 +119,12 @@ const osThreadAttr_t defaultTask_attributes = {
 };
 /* USER CODE BEGIN PV */
 
+/* Definitions for timer */
+osTimerId_t timerHandle;
+const osTimerAttr_t timer_attributes = {
+  .name = "timer"
+};
+
 osMessageQueueId_t mecanum_encoder_speeds_queueHandle;
 const osMessageQueueAttr_t mecanum_encoder_speeds_queue_attributes = {
 		.name = "mecanum_encoder_speeds_queue",
@@ -224,6 +230,7 @@ void StartDefaultTask(void *argument);
 /* USER CODE BEGIN PFP */
 
 int _write(int file, char *ptr, int len);
+void callback(void* argument);
 
 /* USER CODE END PFP */
 
@@ -282,12 +289,14 @@ int main(void)
 
   /* USER CODE BEGIN RTOS_SEMAPHORES */
   /* add semaphores, ... */
-  mecanum_semHandle = osSemaphoreNew(1, 0, &mecanum_sem_attributes);
-  osSemaphoreRelease(mecanum_semHandle);
+  mecanum_semHandle = osSemaphoreNew(1, 1, &mecanum_sem_attributes);
   /* USER CODE END RTOS_SEMAPHORES */
 
   /* USER CODE BEGIN RTOS_TIMERS */
   /* start timers, add new ones, ... */
+  /* Create the timer(s) */
+  /* creation of timer */
+  timerHandle = osTimerNew(callback, osTimerOnce, NULL, &timer_attributes);
   /* USER CODE END RTOS_TIMERS */
 
   /* USER CODE BEGIN RTOS_QUEUES */
@@ -831,7 +840,7 @@ static void uart_lwpkt_evt_fn(lwpkt_t* pkt, lwpkt_evt_type_t type){
 		case LWPKT_EVT_PKT:
 			size_t len = lwpkt_get_data_len(pkt);
 			char* data = (char*)lwpkt_get_data(pkt);
-			printf("Packet received, size(%d), data(%.*s)\r\n", len, len, data);
+			printf("Packet received, size(%d)", len);//, data(%.*s)\r\n", len, len, data);
 
 			cJSON* parsed_json = cJSON_ParseWithLength(data, len);
 			if (cJSON_IsObject(parsed_json)){
@@ -848,20 +857,22 @@ static void uart_lwpkt_evt_fn(lwpkt_t* pkt, lwpkt_evt_type_t type){
 					printf("Robot stopped\r\n");
 					mecanum_robot_stop(&robot);
 				} else {
-					if (cJSON_IsNumber(power_json) && cJSON_IsNumber(theta_json)){
-						float power = cJSON_GetNumberValue(power_json);
-						float theta = cJSON_GetNumberValue(theta_json);
+					if (cJSON_IsNumber(power_json) || cJSON_IsNumber(theta_json) || cJSON_IsNumber(turn_json)){
+						float power = CJSON_NUMBER_OR_ZERO(power_json);
+						float theta = CJSON_NUMBER_OR_ZERO(theta_json);
 						float turn = CJSON_NUMBER_OR_ZERO(turn_json);
 
 						printf("Power: %f, Theta: %f, Turn: %f\r\n", power, theta, turn);
 
 						mecanum_robot_move(&robot, power, theta, turn);
 					} else {
-						printf("One or more key/value pairs missing\r\n");
+						printf("All necessary key/value pairs missing\r\n");
 					}
 				}
 
 				osSemaphoreRelease(mecanum_semHandle);
+
+				osTimerStart(timerHandle, pdMS_TO_TICKS(1000));
 
 			} else {
 				printf("Not a json object\r\n");
@@ -893,6 +904,14 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 	    osSemaphoreRelease(mecanum_semHandle);
   	}
   }
+}
+
+void callback(void* argument){
+	printf("callback\r\n");
+	if (osSemaphoreAcquire(mecanum_semHandle, 0) == osOK){
+		mecanum_robot_stop(&robot);
+		osSemaphoreRelease(mecanum_semHandle);
+	}
 }
 
 /* USER CODE END 4 */
